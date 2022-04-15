@@ -2,6 +2,10 @@
     color: #fff;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .modal-login {
     position: relative;
     left: 40%;
@@ -356,6 +360,7 @@
     width: auto;
     margin-bottom: -6px;
     margin-top: 4px;
+    margin-right: 8px !important;
     flex-shrink: 0;
     height: 100%;
     position: relative;
@@ -444,7 +449,7 @@
     border: 1px solid #d1d1d1;
     border-radius: 6px;
     position: relative;
-    overflow: hidden;
+    //overflow: hidden;
     max-width: 250px;
     height: auto;
     display: flex;
@@ -586,4 +591,273 @@
     margin-bottom: 0.625rem;
     margin-left: 0.375rem;
     margin-right: 0.375rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.item-center {
+    align-items: center;
+}
+
+.style-list {
+    margin: 16px 0;
+    font-family: be vietnam pro, sans-serif;
+    font-weight: 300;
+    color: #000;
+}
+
+.style-list__dropdown {
+    font-family: be vietnam pro, sans-serif;
+    align-items: center;
+    color: #111;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.style-list__dropdown>span {
+    margin-right: 10px;
+}
+
+.style-list__dropdown>span+span {
+    margin-right: 5px;
+}
+
+.style-list__dropdown>span img {
+    width: 20px;
+    height: 20px;
+}
+
+.style-list .content {
+    display: flex;
+    position: relative;
+    font-size: 13px;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.booking-screen .fade-in {
+    animation: fadeIn .3s ease;
+    -webkit-animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.style-list .content .left {
+    width: 20%;
+    padding: 10px 0;
+}
+
+.style-list .content .isActive .user-default {
+    border: 3px solid #f0b000;
+    background: #fff4b6;
+}
+
+.style-list .content .user-default {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8e8e8;
+}
+
+.style-list .content .user-default,
+.style-list .content .img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+    margin: auto;
+    border: 2px solid #fff;
+}
+
+.style-list .content .user-default .img-user {
+    width: 34px;
+    height: 34px;
+    border: none;
+}
+
+.style-list .content .icon-check-default {
+    width: 20px;
+    height: 20px;
+    bottom: -4%;
+    position: absolute;
+    right: 0;
+    border: none !important;
+}
+
+.hide-stylist {
+    display: none !important;
+}
+
+.drop-shadow {
+    position: absolute;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1)) drop-shadow(0 1px 1px rgba(0, 0, 0, 0.06));
+    background-color: rgba(255, 255, 255, 1);
+    width: 100%;
+    z-index: 10;
+    top: 2.75rem;
+}
+
+.drop-date__item {
+    border: 1px solid #e8e8e8;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    padding-left: 0.375rem;
+    padding-right: 0.875rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    display: flex;
+}
+
+.opacity-0 {
+    opacity: 0
+}
+
+.opacity-1 {
+    opacity: 1;
+}
+
+.main-screen .box-time {
+    font-family: Oswald;
+    font-size: 18px;
+    color: #222;
+    margin-top: 35px;
+}
+
+.main-screen .box-time .box-time__item {
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 4px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+#box-time .swiper-button-prev {
+    display: flex;
+    position: absolute;
+    left: -50px;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #5f5f5f;
+    cursor: pointer;
+    border-color: transparent;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: none;
+}
+
+#box-time .swiper-button-next {
+    display: flex;
+    position: absolute;
+    right: -50px;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #5f5f5f;
+    cursor: pointer;
+    border-color: transparent;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: none;
+}
+
+.swiper_button__icon {
+    font-size: 34px;
+    display: flex;
+}
+
+.main-screen #box-time .unvaliable {
+    border: 1px solid #d1d1d1;
+    background: #e8e8e8;
+    color: #a3a3a3;
+    cursor: not-allowed;
+}
+
+.main-screen #box-time .has-choice {
+    background: #fc3;
+    border: 1px solid transparent;
+}
+
+.new-affix-v2 .time-line {
+    padding: 15px 23px;
+    position: relative;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.new-affix-v2 .time-line::before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    width: 23px;
+    height: 40px;
+    background: 0 0;
+    border-bottom-left-radius: 10px;
+    border-left: 2px solid #e8e8e8;
+    border-bottom: 2px solid #e8e8e8;
+    left: 0px;
+    top: 0;
+}
+
+.new-affix-v2 .content-step .button-finally {
+    height: 48px;
+    width: 100%;
+    border-radius: 6px;
+}
+
+
+.new-affix-v2 .button-finally {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 5px 20px;
+    background: #fc3;
+}
+
+.new-affix-v2 .button-finally span {
+    font-family: Oswald;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    display: inline-block;
+}
+
+.new-affix-v2 .sub-description {
+    font-family: be vietnam pro, sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.dis-none {
+    display: none !important;
 }

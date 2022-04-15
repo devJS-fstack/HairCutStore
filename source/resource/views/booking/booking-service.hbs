@@ -16,12 +16,12 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="ant-anchor-link">
-                                            <a href="#" class="ant-anchor-link-title">Cắt gội massage</a>
+                                            <a href="#category1" class="ant-anchor-link-title">Cắt gội massage</a>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="ant-anchor-link">
-                                            <a href="#" class="ant-anchor-link-title">Combo chăm sóc da</a>
+                                            <a href="#category2" class="ant-anchor-link-title">Combo chăm sóc da</a>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="ant-anchor-link">
-                                            <a href="#" class="ant-anchor-link-title">Nhuộm cao cấp</a>
+                                            <a href="#category4" class="ant-anchor-link-title">Nhuộm cao cấp</a>
                                         </div>
                                     </div>
                                 </div>
@@ -222,7 +222,7 @@
 </div>
 <script>
 
-    const linkTitle = document.querySelector('.ant-anchor-link-title');
+    const linkTitle = document.querySelectorAll('.ant-anchor-link-title');
     const chooseBtn = document.querySelectorAll('.item__button');
     const checkImg = document.querySelectorAll('.item__button img')
     const btnCategory1 = document.querySelectorAll('#category1 .item__button');
@@ -232,9 +232,6 @@
     const btnNextTitle = document.querySelector('.button-next span');
     const btnNext = document.querySelector('.button-next');
     var count = 0;
-    linkTitle.onclick = (e) => {
-        e.preventDefault();
-    }
 
     function countService() {
         chooseBtn.forEach((item1, index1) => {
@@ -385,4 +382,49 @@
         })
         countService();
     }
+</script>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        slidesPerView: "auto",
+        slidesBetween: "auto",
+    });
+    /*var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        //init: true
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            620: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+            },
+            680: {
+                slidesPerView: 2,
+                spaceBetween: 40,
+            },
+            920: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+            },
+            1240: {
+                slidesPerView: 4,
+                spaceBetween: 50,
+            },
+        }
+    });*/
+
+
 </script>
