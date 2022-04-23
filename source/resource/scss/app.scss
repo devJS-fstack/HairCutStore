@@ -861,3 +861,114 @@ html {
 .dis-none {
     display: none !important;
 }
+
+
+// booking- done
+
+
+.booking-done {
+    font-family: be vietnam pro, sans-serif;
+    max-width: 500px;
+    margin: auto;
+    color: #111;
+}
+
+.booking-done__item {
+    background-color: rgba(255, 255, 255, 1);
+    margin-bottom: 0.625rem;
+}
+
+.booking-done__title {
+    color: #11b14b;
+    display: flex;
+    padding-top: 1.5rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    padding-bottom: 1.5rem;
+    justify-content: center;
+}
+
+.booking-done__rotation {
+    border-color: #d1d1d1;
+    border-width: 0;
+    border-top-width: 1px;
+    border-style: solid;
+}
+
+.booking-done__rotation img {
+    width: 100%;
+    border-radius: 0.5rem;
+}
+
+.street-booking {
+    color: #111;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    padding-bottom: 0.25rem;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+.booking-done__footer {
+    border-color: #d1d1d1;
+    font-weight: 300;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    padding-top: 1rem;
+    border-width: 0;
+    border-top-width: 1px;
+    border-style: solid;
+    text-align: center;
+}
+
+.booking-done__footer .time-booking {
+    color: #11b14b;
+    font-weight: 600;
+}
+
+.divide {
+    margin-top: -1rem;
+    margin-bottom: -1rem;
+}
+
+.divide a {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 100%;
+    text-decoration: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+}
+
+.divide a:nth-child(2) {
+    border-color: rgba(209, 213, 219, 1);
+    border-width: 0;
+    border-style: solid;
+    border-top-width: calc(1px * calc(1 - 0));
+}
+
+.divide a img:first-child {
+    width: 1rem;
+    margin-right: 1rem;
+}
+
+.divide-title {
+    color: #111;
+    display: flex;
+    font-weight: 400;
+    font-size: .875rem;
+    line-height: 1.25rem
+}
+
+.payment-done {
+    border-color: rgba(209, 213, 219, 1);
+    border-width: 0;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-style: solid;
+}

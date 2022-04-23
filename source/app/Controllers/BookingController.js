@@ -288,49 +288,166 @@ class BookingController {
                 });
             }
         }
-        else if (req.query.step == 3) {
-            let lengthBook = await sequelize.query(`SELECT Count(IDBook) as length FROM Book`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
-            let lengthBooked = lengthBook[0].length + 1;
-            if (lengthBook) {
-                let insertBook = await sequelize.query(`
-                INSERT INTO Book
-                ([IDBook]
-                ,[IDShiftBook]
-                ,[DateBook]
-                ,[Payment]
-                ,[PhoneCustomer]
-                ,[IDStore]
-                ,[IDStaff]
-                ,[Status])
-          VALUES
-                (${lengthBooked},${req.body.idShiftBook},'${req.body.dateBook}',${req.body.payment},'${req.body.phoneBook}',${req.query.storeId},'${req.body.staffBook}',N'Đã đặt lịch')
-                `
-                    , {
-                        raw: true,
-                        type: QueryTypes.INSERT
-                    });
-                var servicesBooked = req.body.servicesBook;
-                if (insertBook) {
-                    for (var i = 0; i < servicesBooked.length; i++) {
-                        let insertBookItem = await sequelize.query(`
-                        INSERT INTO BookItem(IDBook,IDService)
-                        VALUES (${lengthBooked},${servicesBooked[i]})
-                        `)
-                    }
-                }
-
-                res.json(req.body);
-            }
-
-        }
-
-
     }
 
+    async successBooking(req, res, next) {
+        let service = req.app.locals._service;
+        req.app.locals._service.serviceIds = [];
+        var servicesBooked = req.body.servicesBook;
+        let checkAlreadyExist = await sequelize.query(`SELECT * FROM Book WHERE PhoneCustomer = '${req.body.phoneBook}' AND Status = N'Đã đặt lịch'`, {
+            raw: true,
+            type: QueryTypes.SELECT
+        })
+        if (checkAlreadyExist.length > 0) {
+            let deleteBookItem = await sequelize.query(`DELETE BookItem WHERE DateBook='${checkAlreadyExist[0].DateBook}' AND IDShiftBook = ${checkAlreadyExist[0].IDShiftBook} AND IDStaff='${checkAlreadyExist[0].IDStaff}'`, {
+                raw: true,
+                type: QueryTypes.DELETE,
+            })
+            let deleteBook = await sequelize.query(`DELETE Book WHERE DateBook ='${checkAlreadyExist[0].DateBook}' AND IDShiftBook = ${checkAlreadyExist[0].IDShiftBook} AND IDStaff='${checkAlreadyExist[0].IDStaff}'`, {
+                raw: true,
+                type: QueryTypes.DELETE,
+            })
 
+            let insertBook = await sequelize.query(`
+                     INSERT INTO Book
+                     (
+                        [IDShiftBook]
+                        ,[DateBook]
+                        ,[Payment]
+                        ,[PhoneCustomer]
+                        ,[IDStore]
+                        ,[IDStaff]
+                        ,[Status])
+              VALUES
+                     (${req.body.idShiftBook},'${req.body.dateBook}',${req.body.payment},'${req.body.phoneBook}',${req.body.storeBook},'${req.body.staffBook}',N'Đã đặt lịch')
+                     `
+                , {
+                    raw: true,
+                    type: QueryTypes.INSERT
+                });
+            let insertBookItem;
+            for (var i = 0; i < servicesBooked.length; i++) {
+                insertBookItem = await sequelize.query(`
+                            INSERT INTO BookItem(DateBook,IDShiftBook,IDService,IDStaff)
+                            VALUES ('${req.body.dateBook}',${req.body.idShiftBook},${servicesBooked[i]},'${req.body.staffBook}')
+                            `, {
+                    raw: true,
+                    type: QueryTypes.INSERT,
+                });
+            }
+            if (insertBookItem) {
+                let updatePriceBookitem = await sequelize.query(`UPDATE b
+                        SET b.Price = s.ListPrice
+                        FROM BookItem b
+                        INNER JOIN
+                        Service s
+                        ON b.IDService = s.IDService AND b.DateBook = '${req.body.dateBook}' AND b.IDShiftBook = ${req.body.idShiftBook}`, {
+                    raw: true,
+                    type: QueryTypes.UPDATE,
+                })
+            }
+
+
+
+        }
+        else {
+            let insertBook = await sequelize.query(`
+                     INSERT INTO Book
+                     (
+                        [IDShiftBook]
+                        ,[DateBook]
+                        ,[Payment]
+                        ,[PhoneCustomer]
+                        ,[IDStore]
+                        ,[IDStaff]
+                        ,[Status])
+              VALUES
+                     (${req.body.idShiftBook},'${req.body.dateBook}',${req.body.payment},'${req.body.phoneBook}',${req.body.storeBook},'${req.body.staffBook}',N'Đã đặt lịch')
+                     `
+                , {
+                    raw: true,
+                    type: QueryTypes.INSERT
+                });
+            if (insertBook) {
+                let insertBookItem;
+                for (var i = 0; i < servicesBooked.length; i++) {
+                    insertBookItem = await sequelize.query(`
+                            INSERT INTO BookItem(DateBook,IDShiftBook,IDService,IDStaff)
+                            VALUES ('${req.body.dateBook}',${req.body.idShiftBook},${servicesBooked[i]},'${req.body.staffBook}')
+                            `, {
+                        raw: true,
+                        type: QueryTypes.INSERT,
+                    });
+                }
+                if (insertBookItem) {
+                    let updatePriceBookitem = await sequelize.query(`UPDATE b
+                SET b.Price = s.ListPrice
+                FROM BookItem b
+                INNER JOIN
+                Service s
+                ON b.IDService = s.IDService AND b.DateBook = '${req.body.dateBook}' AND b.IDShiftBook = ${req.body.idShiftBook}`, {
+                        raw: true,
+                        type: QueryTypes.UPDATE,
+                    })
+                }
+            }
+        }
+        // res.json(req.body);
+
+        function nameDayOfWeek(number) {
+            switch (number) {
+                case 0: return 'Chủ nhật';
+                case 1: return 'Thứ hai';
+                case 2: return 'Thứ ba';
+                case 3: return 'Thứ tư';
+                case 4: return 'Thứ năm';
+                case 5: return 'Thứ sáu';
+                case 6: return 'Thứ bảy ';
+            }
+        }
+        var d = new Date(req.body.dateBook);
+        var day_month;
+        if (d.getMonth() + 1 < 10)
+            day_month = `${d.getDate()}.0${d.getMonth() + 1}`;
+        else
+            day_month = `${d.getDate()}.${d.getMonth() + 1}`;
+
+
+        let staffChoose = await sequelize.query(`SELECT * FROM Staff WHERE IDStaff = '${req.body.staffBook}'`, {
+            raw: true,
+            type: QueryTypes.SELECT,
+        })
+        let fullName = `${staffChoose[0].SurName} ${staffChoose[0].NameStaff}`
+        let pathImgStaff = staffChoose[0].PathImgStaff;
+
+        res.render('booking/booking-done', {
+            phoneBook: req.body.phoneBook,
+            streetStore: req.body.streetStore,
+            timeChoose: req.body.timeChoose,
+            dayOfWeek: nameDayOfWeek(d.getDay()),
+            day_month: day_month,
+            fullName: fullName,
+            pathImgStaff: pathImgStaff,
+            servicesChoose: req.body.servicesChoose,
+            payment: req.body.payment,
+            dateBook: req.body.dateBook,
+            idShiftBook: req.body.idShiftBook,
+            idStaffBook: req.body.staffBook,
+        })
+    }
+
+    async cancelBooking(req, res) {
+
+        let deteteBookItem = await sequelize.query(`DELETE BookItem WHERE DateBook='${req.query.dateBook}' AND IDShiftBook=${req.query.idShift} AND IDStaff='${req.query.staffBook}'`, {
+            raw: true,
+            type: QueryTypes.DELETE,
+        });
+        let deleteBook = await sequelize.query(`DELETE Book WHERE PhoneCustomer='${req.query.phoneBook}' AND Status=N'Đã đặt lịch'`, {
+            raw: true,
+            type: QueryTypes.DELETE,
+        });
+        res.redirect('/');
+    }
 
 }
 

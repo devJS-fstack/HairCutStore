@@ -96,7 +96,7 @@
                         <span class="flex">
                             <img src="https://30shine.com/static/media/user-large.69c611a8.svg" alt="">
                         </span>
-                        <span>Chọn Stylist</span>
+                        <span class="sty-title">Chọn Stylist</span>
                         <span class="flex item-center" style="background-color: transparent;">
                             <img class="img-drop" src="https://30shine.com/static/media/chevronRight.fe25caf9.svg"
                                 alt="">
@@ -220,6 +220,7 @@
     const serviceTitle = document.querySelector('.service-title');
     const salonTitle = document.querySelector('.salon-title');
     var styList = document.querySelector('.style-list');
+    var styTitle = document.querySelector('.sty-title');
     var shift = {{{ shiftParse }}};
     var staffsInDate1 = {{{ staffsInDate1 }}};
     var staffsInDate2 = {{{ staffsInDate2 }}};
@@ -326,6 +327,9 @@
         styList.classList.remove('dis-none');
         renderBoxTime();
         checkTimeNow();
+        if (bookedInDate1.length > 0 && staffsInDate1.length > 0) {
+            unvaliableTimeBooked(bookedInDate1, staffsInDate1[0].IDStaff);
+        }
     }
 
 
@@ -346,6 +350,8 @@
             contentStaff.classList.add('fade-in');
             imgDrop.src = 'https://30shine.com/static/media/chevronDown.4843aae8.svg';
             var staffItem = document.querySelectorAll('.left');
+            var staffImg = document.querySelector('.user-default');
+            //removeAllActiveStaff(staffItem);
             if (typeof staffCurrent === 'undefined') {
                 clickStaffItem(staffItem, staffsInDate1, bookedInDate1);
             }
@@ -368,8 +374,13 @@
     var yearCurrent = date.getYear();
     dropDate.innerHTML = '';
     var boxTimeItemAll = document.querySelectorAll('.box-time__item');
-
     var staffChoose;
+    var timeChoose;
+    var servicesChoose = '';
+    if (staffsInDate1.length > 0) {
+        staffChoose = staffsInDate1[0].IDStaff;
+        styTitle.innerHTML = staffsInDate1[0].SurName + ' ' + staffsInDate1[0].NameStaff;
+    }
     var shiftChoose;
     var dateChoose;
     if (staffsInDate1.length > 0) dateChoose = staffsInDate1[0].DateRegis;
@@ -416,9 +427,6 @@
     var dropItem = '';
     var isClick = false;
     function clickdateDrop() {
-        dateDrop.onclick = () => {
-
-        }
         if (!dropDate.classList.contains('opacity-1')) {
             dropDate.classList.add('opacity-1');
             dropDate.classList.add('fade-in');
@@ -505,6 +513,11 @@
         let dropDateItem = document.querySelectorAll('.drop-date__item');
         dropDateItem.forEach((item, index) => {
             item.onclick = () => {
+                dropDate.classList.remove('opacity-1');
+                dropDate.classList.remove('fade-in');
+                dropDate.innerHTML = '';
+                dropIconDate.src = 'https://30shine.com/static/media/caretRight.b0d191b3.svg';
+                btnFinally.classList.add('btn-inactive');
                 if (index == 0) {
                     if (staffsInDate1.length > 0)
                         dateChoose = staffsInDate1[0].DateRegis;
@@ -514,7 +527,10 @@
                     var boxTimeItem = document.querySelectorAll('.box-time__item');
                     clickBoxItem(boxTimeItem);
                     renderStaffInDate(staffsInDate1);
+                    unvaliableTimeBooked(bookedInDate1, staffsInDate1[0].IDStaff);
                     var staffItem = document.querySelectorAll('.left');
+                    var staffImg = document.querySelector('.user-default');
+                    isActiveFirstStaff(staffItem[0], staffImg);
                     clickStaffItem(staffItem, staffsInDate1, bookedInDate1);
                 } else {
                     renderBoxTime();
@@ -529,6 +545,10 @@
                             var boxTimeItem = document.querySelectorAll('.box-time__item');
                             clickBoxItem(boxTimeItem);
                             var staffItem = document.querySelectorAll('.left');
+                            var staffImg = document.querySelector('.user-default');
+                            isActiveFirstStaff(staffItem[0], staffImg);
+                            styTitle.innerHTML = staffsInDate2[0].SurName + ' ' + staffsInDate2[0].NameStaff;
+                            staffChoose = staffsInDate2[0].IDStaff;
                             clickStaffItem(staffItem, staffsInDate2, bookedInDate2);
                             break;
                         case 2:
@@ -541,6 +561,10 @@
                             var boxTimeItem = document.querySelectorAll('.box-time__item');
                             clickBoxItem(boxTimeItem);
                             var staffItem = document.querySelectorAll('.left');
+                            var staffImg = document.querySelector('.user-default');
+                            isActiveFirstStaff(staffItem[0], staffImg);
+                            styTitle.innerHTML = staffsInDate3[0].SurName + ' ' + staffsInDate3[0].NameStaff;
+                            staffChoose = staffsInDate3[0].IDStaff;
                             clickStaffItem(staffItem, staffsInDate3, bookedInDate3);
                             break;
                         case 3:
@@ -553,6 +577,10 @@
                             var boxTimeItem = document.querySelectorAll('.box-time__item');
                             clickBoxItem(boxTimeItem);
                             var staffItem = document.querySelectorAll('.left');
+                            var staffImg = document.querySelector('.user-default');
+                            isActiveFirstStaff(staffItem[0], staffImg);
+                            styTitle.innerHTML = staffsInDate4[0].SurName + ' ' + staffsInDate4[0].NameStaff;
+                            staffChoose = staffsInDate4[0].IDStaff;
                             clickStaffItem(staffItem, staffsInDate4, bookedInDate4);
                             break;
                         case 4:
@@ -565,6 +593,10 @@
                             var boxTimeItem = document.querySelectorAll('.box-time__item');
                             clickBoxItem(boxTimeItem);
                             var staffItem = document.querySelectorAll('.left');
+                            var staffImg = document.querySelector('.user-default');
+                            isActiveFirstStaff(staffItem[0], staffImg);
+                            styTitle.innerHTML = staffsInDate5[0].SurName + ' ' + staffsInDate5[0].NameStaff;
+                            staffChoose = staffsInDate5[0].IDStaff;
                             clickStaffItem(staffItem, staffsInDate5, bookedInDate5);
                             break;
                         case 5:
@@ -577,6 +609,10 @@
                             var boxTimeItem = document.querySelectorAll('.box-time__item');
                             clickBoxItem(boxTimeItem);
                             var staffItem = document.querySelectorAll('.left');
+                            var staffImg = document.querySelector('.user-default');
+                            isActiveFirstStaff(staffItem[0], staffImg);
+                            styTitle.innerHTML = staffsInDate6[0].SurName + ' ' + staffsInDate6[0].NameStaff;
+                            staffChoose = staffsInDate6[0].IDStaff;
                             clickStaffItem(staffItem, staffsInDate6, bookedInDate6);
                             break;
                     }
@@ -609,8 +645,6 @@
         swiperBtn[0].classList.remove('dis-none')
         swiperBtn[1].classList.remove('dis-none')
     }
-    //renderBoxTime();
-    //checkTimeNow();
     function checkTimeNow() {
         var d = new Date();
         var boxTimeItem = document.querySelectorAll('.box-time__item');
@@ -627,11 +661,22 @@
                 }
             }
         })
-        if (staffsInDate1.length > 0 && bookedInDate1.length > 0)
-            unvaliableTimeBooked(bookedInDate1, staffsInDate1[0].IDStaff);
     }
 
-    var isClickStaff = false;
+
+    function checkIsClickStaff(staffItem) {
+        var isClick = false;
+        staffItem.forEach((item, index) => {
+            if (item.classList.contains('isActive')) {
+                isClick = true;
+            }
+        })
+        if (isClick)
+            return true;
+        else return false;
+    }
+
+
     function unvaliableTimeBooked(bookInDate, idStaff) {
         var boxTimeItem = document.querySelectorAll('.box-time__item');
         bookInDate.forEach((item) => {
@@ -645,17 +690,19 @@
     var btnFinally = document.querySelector('.button-finally');
     clickBoxItem(boxTimeItemCurrent);
     function clickBoxItem(boxTimeItem) {
-        var indexPre = -1
+        var indexPre = -1;
+        var imgDrop = document.querySelector('.img-drop');
         boxTimeItem.forEach((item, index) => {
             if (!item.classList.contains('unvaliable')) {
                 item.onclick = () => {
-                    isClickTime = true;
+                    botMessage[2].style.borderColor = '#c1e4ca';
                     if (indexPre >= 0) boxTimeItem[indexPre].classList.remove('has-choice');
                     item.classList.add('has-choice');
                     shiftChoose = index + 1;
                     indexPre = index;
-                    if (isClickStaff)
-                        btnFinally.classList.remove('btn-inactive');
+                    var staffItem = document.querySelectorAll('.left');
+                    btnFinally.classList.remove('btn-inactive');
+                    timeChoose = item.innerHTML.trim();
                 }
             }
         })
@@ -702,14 +749,20 @@
         staffList.innerHTML = html;
     }
 
+    function removeAllActiveStaff() {
+        var staff = document.querySelectorAll('.left');
+        var iconCheck = document.querySelectorAll('.icon-check-default');
+        iconCheck.forEach((item) => item.remove());
+        staff.forEach((item) => item.classList.remove('isActive'));
+
+    }
     function clickStaffItem(staffItem, staffInDate, bookedInDate) {
-        var indexPre = -1;
         var staffImg = document.querySelectorAll('.user-default');
         var html = ``;
-        var htmlPre = ``;
         staffItem.forEach((item, index) => {
             item.onclick = () => {
-                isClickStaff = true;
+                styTitle.innerHTML = staffInDate[index].SurName + ' ' + staffInDate[index].NameStaff;
+                removeAllActiveStaff();
                 btnFinally.classList.add('btn-inactive');
                 renderBoxTime();
                 if (staffInDate == staffsInDate1) checkTimeNow();
@@ -717,20 +770,22 @@
                     unvaliableTimeBooked(bookedInDate, staffInDate[index].IDStaff);
                     staffChoose = staffInDate[index].IDStaff;
                     html = staffImg[index].innerHTML;
-                    if (indexPre >= 0) {
-                        staffItem[indexPre].classList.remove('isActive');
-                        staffImg[indexPre].innerHTML = htmlPre;
-                    }
-                    htmlPre = staffImg[index].innerHTML;
-                    html += `  <img class="icon-check-default" src="https://30shine.com/static/media/checkYellow.02dbd103.svg"/>`
+                    html += `  <img class="icon-check-default" src="https://30shine.com/static/media/checkYellow.02dbd103.svg"/>`;
                     staffImg[index].innerHTML = html;
                     item.classList.add('isActive');
-                    indexPre = index;
                 }
                 var boxTimeItem = document.querySelectorAll('.box-time__item');
                 clickBoxItem(boxTimeItem);
             }
         })
+    }
+
+    function isActiveFirstStaff(staffLeft, staffImg) {
+        var html = ``;
+        html = staffImg.innerHTML;
+        html += `  <img class="icon-check-default" src="https://30shine.com/static/media/checkYellow.02dbd103.svg"/>`;
+        staffImg.innerHTML = html;
+        staffLeft.classList.add('isActive');
     }
 
 
@@ -745,6 +800,17 @@
 
     }
     totalPayment();
+
+    var nameServiceBooked = document.querySelectorAll('.name-service__booked');
+    if (nameServiceBooked) {
+        nameServiceBooked.forEach((item, index) => {
+            if (index == nameServiceBooked.length - 1)
+                servicesChoose += `${item.innerHTML.trim()}`
+            else
+                servicesChoose += `${item.innerHTML.trim()}, `
+        })
+    }
+
     btnFinally.onclick = () => {
         var html = ``;
         var phoneBook = arrUrl[0].split('phone=');
@@ -754,20 +820,26 @@
             html += `<input value="${shiftChoose}" name="idShiftBook">`;
             html += `<input value="${dateChoose}" name="dateBook">`;
             html += `<input value="${phoneBook[1]}" name="phoneBook">`;
-            html += `<input value="${storeBook[1]}" name="storeBook">`;
+            html += `<input value=${storeBook[1]} name="storeBook">`;
             html += `<input value="${staffChoose}" name="staffBook">`;
             html += `<input value="${payment}" name="payment">`;
+            html += `<input value="${salonTitle.innerHTML.trim()}" name="streetStore">`;
+            html += `<input value="${timeChoose}" name="timeChoose">`;
+            html += `<input value="${servicesChoose}" name="servicesChoose">`;
             if (serviceBooked.length > 0) {
                 for (var i = 0; i < serviceBooked.length; i++) {
                     html += `<input value="${serviceBooked[i][0].IDService}" name="servicesBook[]">`;
                 }
             }
             formBook.innerHTML = html;
-            formBook.action = `${arrUrl[0]}&${arrUrl[1]}&step=3`;
+            formBook.action = `success`;
             formBook.submit();
         }
     }
     renderStaffInDate(staffsInDate1);
+    var staffItem = document.querySelectorAll('.left');
+    var staffImg = document.querySelector('.user-default');
+    if (staffItem && staffImg) isActiveFirstStaff(staffItem[0], staffImg);
 
 </script>
 

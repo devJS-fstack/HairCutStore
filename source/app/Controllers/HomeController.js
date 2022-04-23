@@ -27,14 +27,14 @@ class HomeController {
         })
             .then((result) => {
                 if (result.length > 0) {
-                    res.locals._nameUser.isLogin = true;
-                    res.locals._nameUser.nameUser = result[0].Name;
+                    //res.locals._nameUser.isLogin = true;
+                    //res.locals._nameUser.nameUser = result[0].Name;
                     res.render('home', {
                         name: result[0].Name,
                         phone: result[0].Phone,
                     });
                 } else {
-                    res.locals._nameUser.isLogin = false;
+                    //res.locals._nameUser.isLogin = false;
                     res.send(`Login Fail`);
                 }
             })
