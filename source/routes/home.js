@@ -4,8 +4,8 @@ const router = express.Router();
 const homeController = require('../app/Controllers/HomeController')
 
 // newsController.main
-router.post('/login', homeController.login);
-router.post('/regis', homeController.regis)
-router.get('/', homeController.main);
+router.post('/checkToken', homeController.checkToken)
+router.post('/login', homeController.postLogin);
+router.get('/', homeController.getMain);
 
 module.exports = router;

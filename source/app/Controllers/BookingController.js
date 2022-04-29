@@ -7,7 +7,7 @@ class BookingController {
         let user = req.app.locals._user;
         let service = req.app.locals._service;
         if (req.query.step == 0) {
-            let cus = await sequelize.query(`SELECT * FROM Customer WHERE Phone = '${req.body.inputPhone}'`, {
+            let cus = await sequelize.query(`SELECT * FROM Customer WHERE PhoneCustomer = '${req.body.inputPhone}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
             })

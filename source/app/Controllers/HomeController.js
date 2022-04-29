@@ -1,47 +1,75 @@
 const TaiKhoan = require('../Models/TaiKhoan');
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../../util/sequelizedb');
-class HomeController {
-    // GET/ news
-    async main(req, res, next) {
-        req.app.locals._service.serviceIds = [];
+const JWT = require('jsonwebtoken');
 
-        let data = await sequelize.query("SELECT * FROM TaiKhoan", {
+require('dotenv').config();
+class HomeController {
+    // Handle main home
+
+    getMain(req, res, next) {
+        var scripts = [{ script: '/js-handle/home.js' }]
+        res.render('home', {
+            scripts: scripts
+        });
+    }
+
+    async postLogin(req, res) {
+        const account = req.body.data.account;
+        const password = req.body.data.password;
+        let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = PhoneCustomer AND Account='${account}' COLLATE SQL_Latin1_General_CP1_CS_AS
+            AND Password='${password}' COLLATE SQL_Latin1_General_CP1_CS_AS`, {
             raw: true,
             type: QueryTypes.SELECT,
         });
-        // data[0] = data[0].map(user => user.toObject());
-        // console.log(data)
-        res.render('home');
-        let user = req.app.locals._user;
-        user.nameUser = '';
-    };
-
-
-    async login(req, res, next) {
-        // query ignore --AND Password='${req.body.inputPassword}' COLLATE SQL_Latin1_General_CP1_CS_AS --
-        let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = Phone AND Account='${req.body.inputAccount}' COLLATE SQL_Latin1_General_CP1_CS_AS
-        AND Password='${req.body.inputPassword}' COLLATE SQL_Latin1_General_CP1_CS_AS`, {
-            raw: true,
-            type: QueryTypes.SELECT,
-        })
-            .then((result) => {
-                if (result.length > 0) {
-                    //res.locals._nameUser.isLogin = true;
-                    //res.locals._nameUser.nameUser = result[0].Name;
-                    res.render('home', {
-                        name: result[0].Name,
-                        phone: result[0].Phone,
-                    });
-                } else {
-                    //res.locals._nameUser.isLogin = false;
-                    res.send(`Login Fail`);
+        if (user.length > 0) {
+            const encodedToken = () => {
+                return JWT.sign({
+                    role: user[0].IDRole,
+                    accountId: user[0].Account,
+                    nameCustomer: user[0].NameCustomer,
+                    iat: new Date().getTime(),
+                    exp: new Date().setDate(new Date().getDate() + 3)
+                }, process.env.SECRET_KEY_ACCESS_TOKEN);
+            }
+            const token = encodedToken();
+            res.status(200).json({
+                status: "success",
+                elements: {
+                    token: token,
+                    nameUser: user[0].NameCustomer,
+                    phoneCustomer: user[0].PhoneCustomer
                 }
             })
-            .catch((err) => {
-                console.log(err);
+        }
+        else {
+            res.status(200).json({
+                status: "fail",
+                elements: {
+                    err: "User is not found",
+                }
             })
+        }
     }
+
+    checkToken(req, res) {
+        JWT.verify(req.body.data.accessToken, process.env.SECRET_KEY_ACCESS_TOKEN, (err, user) => {
+            if (err) {
+                return res.status(200).json({
+                    status: 'Does not token real',
+                })
+            }
+            else {
+                return res.status(200).json({
+                    status: 'success',
+                    nameCustomer: user.nameCustomer,
+                    phoneCustomer: user.accountId
+                })
+            }
+        })
+    }
+
+
 
     async regis(req, res, next) {
         var name = req.body.inputName;

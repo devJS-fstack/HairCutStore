@@ -12,21 +12,17 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="user-avatar" src="" alt="">
-                        {{#if name}}
-                        {{{name}}}
-                        {{else}}
-                        Khách hàng
-                        {{/if}}
+                        <span class="name-user">
+                            Khách hàng
+                        </span>
                     </a>
-                    {{#if phone}}
-                    {{else}}
+
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Đăng
+                        <a class="dropdown-item" data-toggle="modal" data-target="#modalLogin">Đăng
                             nhập</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" data-toggle="modal" data-target="#regisModal">Đăng ký</a>
                     </div>
-                    {{/if}}
                 </li>
             </ul>
         </div>
@@ -35,8 +31,8 @@
 
 
 <!-- Modal -->
-<form method="post" action="/home/login">
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<form method="get" action="" id="formLogin">
+    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -62,8 +58,11 @@
                             aria-describedby="inputGroup-sizing-sm" placeholder="Mật khẩu" name="inputPassword">
                     </div>
                 </div>
+                <div class="err-login">
+                    <span>Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra lại!</span>
+                </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Tiếp tục</button>
+                    <button id="btnLogin" type="submit" class="btn btn-primary">Tiếp tục</button>
                 </div>
             </div>
         </div>
@@ -116,7 +115,8 @@
         </div>
     </div>
 </form>
-
-<script>
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="/js-handle/header.js"></script>

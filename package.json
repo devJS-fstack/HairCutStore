@@ -20,9 +20,13 @@
   "license": "ISC",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.5",
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-handlebars": "^5.1.0",
     "handlebars": "^4.7.7",
+    "jsonwebtoken": "^8.5.1",
+    "local-storage": "^2.0.0",
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
     "mssql": "^7.3.0",

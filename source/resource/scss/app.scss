@@ -11,6 +11,13 @@ html {
     left: 40%;
 }
 
+.err-login {
+    font-size: 12px;
+    text-align: center;
+    color: red;
+    display: none;
+}
+
 .heading-login {
     display: flex;
     justify-content: center;
@@ -971,4 +978,44 @@ html {
     border-top-width: 1px;
     border-bottom-width: 1px;
     border-style: solid;
+}
+
+.container__booking-info {
+    max-width: 1200px;
+    padding: 0 15px px;
+    margin: auto;
+    width: 100%;
+}
+
+.list-booking-infor .title-booked {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-family: Oswald;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 0;
+}
+
+.box-booking__info {
+    width: 576px;
+    margin-right: 18px;
+    height: 100%;
+    position: relative;
+}
+
+.box-booking__item {
+    background: #fff;
+    color: #fff;
+    font-family: Be;
+    font-size: 16px;
+}
+
+.box-booking__item .box-booking__content {
+    background: rgba(0, 0, 0, .8);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.box-booking__content .time-to {
+    margin-bottom: 16px;
 }
