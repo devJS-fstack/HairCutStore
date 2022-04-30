@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 var morgan = require('morgan');
 const path = require('path');
-const port = 3000;
+const port = 4000;
 
 const route = require('./routes/index');
 const handlebars = require('express-handlebars');
@@ -12,27 +12,29 @@ const serviceMiddle = require('./app/middlewares/ServiceMiddleware');
 const { connectData } = require('./util/sequelizedb');
 const { sequelize } = require('./util/sequelizedb');
 const { QueryTypes } = require('sequelize');
-
-
-
-
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const { checkToken, passportMiddle } = require('./app/middlewares/Authentication');
 
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 connectData();
-
+const session = require('express-session');
+const store = session.MemoryStore();
+app.use(session({
+    saveUninitialized: false,
+    secret: process.env.KEY_SESSION,
+    cookie: {
+        maxAge: 1000 * 10 // 10s
+    },
+    store
+}))
 
 app.engine('hbs', handlebars({
     extname: '.hbs',
     helpers: {
         sum: (a, b) => a + b,
-        returnItem: (index) => {
-            if (index == 0) return `item1`;
-            else if (index == 1) return `item2`;
-            else if (index == 2) return `item3`;
-            else if (index == 3) return `item4`;
-        }
     }
 }))
 app.use(express.urlencoded({
@@ -51,6 +53,8 @@ app.locals._service = {
 }
 app.use(nameUserMiddle);
 app.use(serviceMiddle);
+app.use(checkToken);
+app.use(passportMiddle);
 route(app);
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

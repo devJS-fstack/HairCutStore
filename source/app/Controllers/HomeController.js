@@ -3,6 +3,7 @@ const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../../util/sequelizedb');
 const JWT = require('jsonwebtoken');
 
+
 require('dotenv').config();
 class HomeController {
     // Handle main home
@@ -15,14 +16,14 @@ class HomeController {
     }
 
     async postLogin(req, res) {
-        const account = req.body.data.account;
-        const password = req.body.data.password;
+        const account = req.body.username;
+        const password = req.body.password;
         let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = PhoneCustomer AND Account='${account}' COLLATE SQL_Latin1_General_CP1_CS_AS
             AND Password='${password}' COLLATE SQL_Latin1_General_CP1_CS_AS`, {
             raw: true,
             type: QueryTypes.SELECT,
         });
-        if (user.length > 0) {
+        try {
             const encodedToken = () => {
                 return JWT.sign({
                     role: user[0].IDRole,
@@ -41,8 +42,7 @@ class HomeController {
                     phoneCustomer: user[0].PhoneCustomer
                 }
             })
-        }
-        else {
+        } catch (error) {
             res.status(200).json({
                 status: "fail",
                 elements: {
@@ -50,6 +50,34 @@ class HomeController {
                 }
             })
         }
+        // if (user.length > 0) {
+        //     const encodedToken = () => {
+        //         return JWT.sign({
+        //             role: user[0].IDRole,
+        //             accountId: user[0].Account,
+        //             nameCustomer: user[0].NameCustomer,
+        //             iat: new Date().getTime(),
+        //             exp: new Date().setDate(new Date().getDate() + 3)
+        //         }, process.env.SECRET_KEY_ACCESS_TOKEN);
+        //     }
+        //     const token = encodedToken();
+        //     res.status(200).json({
+        //         status: "success",
+        //         elements: {
+        //             token: token,
+        //             nameUser: user[0].NameCustomer,
+        //             phoneCustomer: user[0].PhoneCustomer
+        //         }
+        //     })
+        // }
+        // else {
+        //     res.status(200).json({
+        //         status: "fail",
+        //         elements: {
+        //             err: "User is not found",
+        //         }
+        //     })
+        // }
     }
 
     checkToken(req, res) {
@@ -69,7 +97,17 @@ class HomeController {
         })
     }
 
-
+    passportAuthen(req, res) {
+        try {
+            res.json({
+                body: req.body
+            })
+        } catch (error) {
+            res.json({
+                error: error.stack
+            })
+        }
+    }
 
     async regis(req, res, next) {
         var name = req.body.inputName;

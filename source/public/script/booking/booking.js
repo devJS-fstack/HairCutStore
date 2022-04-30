@@ -1,3 +1,18 @@
+const itemCenter = document.querySelectorAll('.item-center');
+const formChooseStore = document.getElementById('chooseStore');
+const urlBook = window.location.href;
+const arrUrl = urlBook.split("&");
+const mainScrActive = document.querySelector('.main-screen__block--active');
+const mainScr = document.querySelectorAll('.main-screen__block');
+const iconActive = document.querySelectorAll('.salon-icon--active');
+const botMessage = document.querySelectorAll('.bot-message');
+const textValidate = document.querySelectorAll('.text-validate');
+const serviceTitle = document.querySelector('.service-title');
+const salonTitle = document.querySelector('.salon-title');
+var styList = document.querySelector('.style-list');
+var styTitle = document.querySelector('.sty-title');
+
+
 itemCenter[0].addEventListener('click', () => {
     formChooseStore.action = `${arrUrl[0]}&${arrUrl[1]}&step=1`;
     formChooseStore.submit();

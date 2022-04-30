@@ -1,34 +1,23 @@
-<div class="row">
-    {{#each store}}
-    <div class="col-sm-6 col-lg-4">
-        <div class="card mt-4" style="width: 18rem;">
-            <img class="card-img-top" src="{{this.PathImg}}" alt=" Card image cap">
-            <div class="card-body" style="display:inline-block;">
-                <h5 class="card-title">{{this.City}}</h5>
-                <p class="card-text">{{this.Street}}</p>
-                <a href="#" class="btn-choose__store btn btn-primary">Chọn salon</a>
+<div class="main" style="background-color: rgb(238, 238, 238)">
+    <div class="container">
+        <div class="row">
+            {{#each store}}
+            <div class="col-sm-6 col-lg-4">
+                <div class="card mt-4" style="width: 18rem;">
+                    <img class="card-img-top" src="{{this.PathImg}}" alt=" Card image cap">
+                    <div class="card-body" style="display:inline-block;">
+                        <h5 class="card-title">{{this.City}}</h5>
+                        <p class="card-text">{{this.Street}}</p>
+                        <a href="#" class="btn-choose__store btn btn-primary">Chọn salon</a>
+                    </div>
+                </div>
+                <input class="flag-idStore" type="text" style="display:none" value={{this.IDStore}}>
             </div>
+            {{/each}}
         </div>
-        <input class="flag-idStore" type="text" style="display:none" value={{this.IDStore}}>
+        <form id="chooseStore" method="post"></form>
     </div>
-    {{/each}}
 </div>
-<form id="chooseStore" method="post"></form>
 
-<script>
-    const btnChooseStrore = document.querySelectorAll(".btn-choose__store");
-    const formChooseStore = document.getElementById("chooseStore");
-    const valueIdStore = document.querySelectorAll(".flag-idStore");
-    var storeId;
-    const urlBook = window.location.href;
-    const arrUrl = urlBook.split("&");
-    btnChooseStrore.forEach((btn, index) => {
-        btn.onclick = (e) => {
-            storeId = valueIdStore[index].value;
-            e.preventDefault();
-            formChooseStore.action = `${arrUrl[0]}&storeId=${storeId}&step=0`;
-            formChooseStore.submit();
-        }
-
-    })
+<script src="/script/booking/booking-salon.js">
 </script>

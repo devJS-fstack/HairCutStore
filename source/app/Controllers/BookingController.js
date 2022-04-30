@@ -449,6 +449,19 @@ class BookingController {
         res.redirect('/');
     }
 
+    infoBooking(req, res) {
+        if (req.isAuthenticated) {
+            return res.status(200).json({
+                status: 'success',
+                message: 'info page'
+            })
+        }
+        return res.status(200).json({
+            status: 'failed',
+            message: 'not authenticated'
+        })
+    }
+
 }
 
 module.exports = new BookingController;

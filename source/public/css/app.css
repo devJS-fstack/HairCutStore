@@ -842,7 +842,7 @@ html {
 .list-booking-infor .title-booked {
   padding-top: 30px;
   padding-bottom: 30px;
-  font-family: Oswald;
+  font-family: be vietnam pro, sans-serif;
   font-weight: 700;
   font-size: 28px;
   margin-bottom: 0; }
@@ -856,10 +856,61 @@ html {
 .box-booking__item {
   background: #fff;
   color: #fff;
-  font-family: Be;
+  font-family: be vietnam pro, sans-serif;
   font-size: 16px; }
 
 .box-booking__item .box-booking__content {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   padding: 20px; }
+
+.box-booking__content .time-to {
+  margin-bottom: 16px; }
+
+.box-booking__content .item:not(:last-child) {
+  margin-bottom: 6px; }
+
+.box-booking__content .item {
+  display: flex;
+  align-items: center; }
+
+.box-booking__content .item span {
+  min-height: 26px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; }
+
+.box-booking__content .item img {
+  width: 22px;
+  margin-right: 16px; }
+
+.box-booking__action {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 15px; }
+
+.box-booking__action .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  color: #000;
+  font-family: be vietnam pro, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  padding: 5px 20px;
+  cursor: pointer;
+  transition: all .3s;
+  border: 1px solid rgba(0, 0, 0, 0.13); }
+
+.box-booking__action .button:not(:last-child) {
+  margin-right: 18px; }
+
+.box-booking__action .button:hover {
+  background: #fc3;
+  border-color: #fc3; }

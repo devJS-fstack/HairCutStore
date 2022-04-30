@@ -1,0 +1,13 @@
+
+
+POST http://localhost:4000/booking/info
+
+
+###
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+    "username":"0905783245","password":"1"
+    //"data":{"username":"0905783245","password":"1"}
+}

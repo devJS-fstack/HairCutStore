@@ -24,6 +24,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-handlebars": "^5.1.0",
+    "express-session": "^1.17.2",
     "handlebars": "^4.7.7",
     "jsonwebtoken": "^8.5.1",
     "local-storage": "^2.0.0",
@@ -31,6 +32,8 @@
     "morgan": "^1.10.0",
     "mssql": "^7.3.0",
     "node-sass": "^7.0.1",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
     "sass": "^1.47.0",
     "sequelize": "^6.13.0",
     "tedious": "^11.0.8"
