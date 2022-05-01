@@ -17,10 +17,6 @@ const instance = axios.create({
     headers: {
         'Content-Type': 'application/json'
     },
-    data: {
-        account: inputAccount.value,
-        password: inputPassword.value,
-    }
 });
 
 // xu ly data truoc khi xuong server
@@ -111,13 +107,13 @@ if (accessToken != `null`) {
 
 
 
-    async function checkToken() {
-        return (await instance.post('/checkToken', {
-            data: {
-                accessToken: accessToken,
-            }
-        })).data;
-    }
+}
+async function checkToken() {
+    return (await instance.post('/checkToken', {
+        data: {
+            accessToken: accessToken,
+        }
+    })).data;
 }
 
 async function login() {

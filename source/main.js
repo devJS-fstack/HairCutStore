@@ -53,8 +53,8 @@ app.locals._service = {
 }
 app.use(nameUserMiddle);
 app.use(serviceMiddle);
-app.use(checkToken);
-app.use(passportMiddle);
+//app.use(checkToken);
+//app.use(passportMiddle);
 route(app);
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

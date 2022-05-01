@@ -16,7 +16,6 @@ const passportMiddle = async (req, res, next) => {
         type: QueryTypes.SELECT,
     });
     passport.use(new LocalStrategy((username, password, done) => {
-        console.log(`data:::${username}`);
         if (user.length > 0) {
             return done(null, {
                 username,
@@ -28,20 +27,22 @@ const passportMiddle = async (req, res, next) => {
     }))
 
     passport.serializeUser((user, done) => {
-        console.log(user.username, `username serialize`);
-        done(null, user.username);
+        console.log(user.username);
+        return done(null, user.username);
     })
 
     passport.deserializeUser((username, done) => {
-        console.log(`deserializeUser:::`, username);
-        if (user.length > 0) {
+        console.log(`deserializeUser :::`, username);
+        if (username == '0905783245') {
             return done(null, {
                 username,
                 active: true
             })
         }
-        done(null, false)
+        done(null, false);
     })
+
+
     next();
 }
 
