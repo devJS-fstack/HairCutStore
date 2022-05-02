@@ -68,7 +68,7 @@
         </div>
     </div>
 </form>
-<form method="post" action="/home/regis ">
+<form method="post" id="formRegis">
     <div class="modal fade" id="regisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -98,18 +98,19 @@
                         <div class="input-group-prepend">
                         </div>
                         <input type="email" class="form-control" aria-label="Small"
-                            aria-describedby="inputGroup-sizing-sm" placeholder="Email" name="inputEmail">
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" aria-describedby="inputGroup-sizing-sm"
+                            placeholder="Email" name="inputEmail">
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <div class="input-group-prepend">
                         </div>
                         <input type="password" class="form-control" aria-label="Small"
                             aria-describedby="inputGroup-sizing-sm" placeholder="Nhập mật khẩu mới"
-                            name="inputPassword">
+                            name="inputPasswordNew">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Đăng Ký</button>
+                    <button id="btn-regis" type="submit" class="btn btn-success">Đăng Ký</button>
                 </div>
             </div>
         </div>

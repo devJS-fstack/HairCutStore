@@ -4,12 +4,21 @@ const errLogin = document.querySelector('.err-login');
 const modalLogin = document.getElementById('modalLogin');
 const nameUser = document.querySelector('.name-user');
 const dropDownMenu = document.querySelector('.dropdown-menu');
+const btnRegis = document.getElementById('btn-regis');
+const formRegis = document.getElementById('formRegis');
+const modalRegis = document.getElementById('regisModal');
 
 
 // create instance axios config
 
 const inputAccount = document.querySelector('[name=inputAccount]');
 const inputPassword = document.querySelector('[name=inputPassword]');
+
+// get value input regis modal
+const fullnameRegis = document.querySelector('[name=inputName]');
+const phoneRegis = document.querySelector('[name=inputPhone]');
+const emailRegis = document.querySelector('[name=inputEmail]');
+const passwordRegis = document.querySelector('[name=inputPasswordNew]');
 
 const instance = axios.create({
     baseURL: '',
@@ -72,6 +81,16 @@ btnLogin.onclick = async (e) => {
     }
 }
 
+// handle regis submit
+
+btnRegis.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (validatePhone(phoneRegis.value)) console.log('cc')
+    else console.log('cl')
+})
+
+
+
 // check Token 
 const accessToken = `${window.localStorage.getItem('accessToken')}`;
 if (accessToken != `null`) {
@@ -104,9 +123,6 @@ if (accessToken != `null`) {
             window.location.href = '/';
         }
     }
-
-
-
 }
 async function checkToken() {
     return (await instance.post('/checkToken', {
@@ -116,6 +132,14 @@ async function checkToken() {
     })).data;
 }
 
+async function checkDuplicatePhone(phone) {
+    return (await instance.post('/regis/checkDuplicatePhone', {
+        data: {
+            phone: phone
+        }
+    }))
+}
+
 async function login() {
     return (await instance.post('/login', {
         data: {
@@ -123,4 +147,17 @@ async function login() {
             password: inputPassword.value,
         }
     })).data;
+}
+
+
+const validateEmail = (email) => {
+    return String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+};
+
+const validatePhone = (phone) => {
+    return /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/.test(phone);
 }
