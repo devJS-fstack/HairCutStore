@@ -15,6 +15,20 @@ class RegisController {
             .then(result => res.redirect('back'))
             .catch(next);
     }
+    async checkDuplicatePhone(req, res) {
+        let checkDuplicate = await sequelize.query(`SELECT * FROM TaiKhoan WHERE Account = '${req.body.data.phone}'`)
+        if (checkDuplicate.length > 0) {
+            res.status(200).json({
+                success: 'found'
+            }
+            )
+        } else {
+            res.status(200).json({
+                success: 'not found'
+            })
+        }
+    }
+
 }
 
 module.exports = new RegisController;

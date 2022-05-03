@@ -18,6 +18,25 @@ html {
     display: none;
 }
 
+.err-regis {
+    font-size: 12px;
+    text-align: center;
+    color: red;
+    //display: none;
+}
+
+.span-err__regis {
+    font-size: 12px;
+    text-align: center;
+    color: red;
+    position: relative;
+    text-align: center;
+    color: red;
+    position: absolute;
+    display: none;
+    top: 34px;
+}
+
 .heading-login {
     display: flex;
     justify-content: center;

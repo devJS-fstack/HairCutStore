@@ -1,6 +1,6 @@
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../../util/sequelizedb');
-
+require('dotenv').config();
 class BookingController {
     // GET/ news
     async main(req, res, next) {
@@ -449,17 +449,35 @@ class BookingController {
         res.redirect('/');
     }
 
-    infoBooking(req, res) {
-        if (req.isAuthenticated) {
+    async infoBooking(req, res) {
+        let infoBook = await sequelize.query(`SELECT Street,DateBook,NameStaff,SurName,HourStart,MinuteStart,NameDayOfWeek,IDShiftBook,b.IDStaff FROM DayOfWeek as d,Store as s,Book as b,Staff as st,Shift as sh,RegisShift as r
+        WHERE PhoneCustomer ='${req.body.phoneCustomer}' AND Status=N'Đã đặt lịch' AND b.IDShiftBook = sh.IDShift AND b.IDStaff = st.IDStaff
+        AND b.IDStore = s.IDStore AND d.IDDayOfWeek = r.IDDayOfWeek AND b.DateBook = r.DateRegis AND r.IDStaff = b.IDStaff`, {
+            raw: true,
+            type: QueryTypes.SELECT,
+        })
+        if (infoBook.length > 0) {
+            var fullnameStaff = infoBook[0].SurName + ' ' + infoBook[0].NameStaff;
+            var timebook = infoBook[0].MinuteStart == 0 ? `${infoBook[0].HourStart}h00` : `${infoBook[0].HourStart}h${infoBook[0].MinuteStart}`
             return res.status(200).json({
-                status: 'success',
-                message: 'info page'
+                status_info: 'success',
+                street: infoBook[0].Street,
+                dateBook: infoBook[0].DateBook,
+                nameStaff: fullnameStaff,
+                timeBook: timebook,
+                dayofweek: infoBook[0].NameDayOfWeek,
+                minuteBook: infoBook[0].MinuteStart,
+                hourBook: infoBook[0].HourStart,
+                idShift: infoBook[0].IDShiftBook,
+                idStaff: infoBook[0].IDStaff,
             })
         }
-        return res.status(200).json({
-            status: 'failed',
-            message: 'not authenticated'
-        })
+        else {
+            return res.status(200).json({
+                status_info: 'not booking found'
+            })
+        }
+
     }
 
 }

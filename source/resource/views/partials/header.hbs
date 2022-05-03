@@ -68,7 +68,7 @@
         </div>
     </div>
 </form>
-<form method="post" action="/home/regis ">
+<form method="post" id="formRegis">
     <div class="modal fade" id="regisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -81,35 +81,44 @@
                 </div>
                 <div class="modal-body">
                     <h5 class="heading-login"> Đăng ký tài khoản nhanh chóng và dễ dàng</h5>
-                    <div class="input-group input-group-sm mb-3">
+                    <div class="relative input-group input-group-sm mb-4">
                         <div class="input-group-prepend">
                         </div>
                         <input type="text" class="form-control" aria-label="Small"
                             aria-describedby="inputGroup-sizing-sm" placeholder="Họ Và Tên" name="inputName">
+                        <span class="span-err__regis err-name">Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra
+                            lại!</span>
                     </div>
-                    <div class="input-group input-group-sm mb-3">
+                    <div class="relative input-group input-group-sm mb-4">
                         <div class="input-group-prepend">
                         </div>
                         <input type="tel" pattern="((09|03|07|08|05)+([0-9]{8})\b)" required class="form-control"
                             aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Số di động"
                             name="inputPhone">
+                        <span class="span-err__regis err-phone">Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra
+                            lại!</span>
                     </div>
-                    <div class="input-group input-group-sm mb-3">
+                    <div class="relative input-group input-group-sm mb-4">
                         <div class="input-group-prepend">
                         </div>
                         <input type="email" class="form-control" aria-label="Small"
-                            aria-describedby="inputGroup-sizing-sm" placeholder="Email" name="inputEmail">
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" aria-describedby="inputGroup-sizing-sm"
+                            placeholder="Email" name="inputEmail">
+                        <span class="span-err__regis err-email">Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra
+                            lại!</span>
                     </div>
-                    <div class="input-group input-group-sm mb-3">
+                    <div class="relative input-group input-group-sm mb-4">
                         <div class="input-group-prepend">
                         </div>
                         <input type="password" class="form-control" aria-label="Small"
                             aria-describedby="inputGroup-sizing-sm" placeholder="Nhập mật khẩu mới"
-                            name="inputPassword">
+                            name="inputPasswordNew">
+                        <span class="span-err__regis err-pass">Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra
+                            lại!</span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Đăng Ký</button>
+                    <button id="btn-regis" type="submit" class="btn btn-success">Đăng Ký</button>
                 </div>
             </div>
         </div>

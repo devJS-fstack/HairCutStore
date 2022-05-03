@@ -16,14 +16,14 @@ class HomeController {
     }
 
     async postLogin(req, res) {
-        const account = req.body.username;
-        const password = req.body.password;
+        const account = req.body.data.account;
+        const password = req.body.data.password;
         let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = PhoneCustomer AND Account='${account}' COLLATE SQL_Latin1_General_CP1_CS_AS
             AND Password='${password}' COLLATE SQL_Latin1_General_CP1_CS_AS`, {
             raw: true,
             type: QueryTypes.SELECT,
         });
-        try {
+        if (user.length > 0) {
             const encodedToken = () => {
                 return JWT.sign({
                     role: user[0].IDRole,
@@ -42,7 +42,8 @@ class HomeController {
                     phoneCustomer: user[0].PhoneCustomer
                 }
             })
-        } catch (error) {
+        }
+        else {
             res.status(200).json({
                 status: "fail",
                 elements: {
@@ -50,34 +51,6 @@ class HomeController {
                 }
             })
         }
-        // if (user.length > 0) {
-        //     const encodedToken = () => {
-        //         return JWT.sign({
-        //             role: user[0].IDRole,
-        //             accountId: user[0].Account,
-        //             nameCustomer: user[0].NameCustomer,
-        //             iat: new Date().getTime(),
-        //             exp: new Date().setDate(new Date().getDate() + 3)
-        //         }, process.env.SECRET_KEY_ACCESS_TOKEN);
-        //     }
-        //     const token = encodedToken();
-        //     res.status(200).json({
-        //         status: "success",
-        //         elements: {
-        //             token: token,
-        //             nameUser: user[0].NameCustomer,
-        //             phoneCustomer: user[0].PhoneCustomer
-        //         }
-        //     })
-        // }
-        // else {
-        //     res.status(200).json({
-        //         status: "fail",
-        //         elements: {
-        //             err: "User is not found",
-        //         }
-        //     })
-        // }
     }
 
     checkToken(req, res) {
@@ -109,6 +82,12 @@ class HomeController {
         }
     }
 
+    status(req, res) {
+        res.status(200).json({
+            status: 'success',
+            message: 'ok'
+        })
+    }
     async regis(req, res, next) {
         var name = req.body.inputName;
         var phone = req.body.inputPhone;
@@ -155,6 +134,8 @@ class HomeController {
         }
 
     }
+
+    
 }
 
 module.exports = new HomeController;

@@ -1,9 +1,14 @@
 const btnLogin = document.getElementById("btnLogin");
 const formLogin = document.getElementById("formLogin");
 const errLogin = document.querySelector('.err-login');
+const errRegis = document.querySelector('.err-regis');
+const errSpan = document.querySelector('.err-regis span');
 const modalLogin = document.getElementById('modalLogin');
 const nameUser = document.querySelector('.name-user');
 const dropDownMenu = document.querySelector('.dropdown-menu');
+const btnRegis = document.getElementById('btn-regis');
+const formRegis = document.getElementById('formRegis');
+const modalRegis = document.getElementById('regisModal');
 
 
 // create instance axios config
@@ -11,16 +16,18 @@ const dropDownMenu = document.querySelector('.dropdown-menu');
 const inputAccount = document.querySelector('[name=inputAccount]');
 const inputPassword = document.querySelector('[name=inputPassword]');
 
+// get value input regis modal
+const fullnameRegis = document.querySelector('[name=inputName]');
+const phoneRegis = document.querySelector('[name=inputPhone]');
+const emailRegis = document.querySelector('[name=inputEmail]');
+const passwordRegis = document.querySelector('[name=inputPasswordNew]');
+
 const instance = axios.create({
     baseURL: '',
     timeOut: 3 * 1000,
     headers: {
         'Content-Type': 'application/json'
     },
-    data: {
-        account: inputAccount.value,
-        password: inputPassword.value,
-    }
 });
 
 // xu ly data truoc khi xuong server
@@ -76,6 +83,103 @@ btnLogin.onclick = async (e) => {
     }
 }
 
+// handle regis submit
+const spanName = document.querySelector('.err-name');
+const spanPhone = document.querySelector('.err-phone');
+const spanEmail = document.querySelector('.err-email');
+const spanPass = document.querySelector('.err-pass');
+const notiRegis = (style, textErr, itemFocus, span) => {
+    span.style.display = style;
+    span.textContent = textErr;
+    if (itemFocus) itemFocus.focus();
+}
+
+const checkNameRegis = () => {
+    if (fullnameRegis.value == '') {
+        notiRegis('block', 'Anh vui lòng nhập họ tên của mình ạ', fullnameRegis, spanName);
+        return false;
+    }
+    else {
+        notiRegis('none', '', null, spanName);
+        return true;
+    }
+}
+
+const checkPhoneRegis = () => {
+    if (phoneRegis.value == '') {
+        notiRegis('block', 'Anh vui lòng nhập số điện thoại của mình ạ', phoneRegis, spanPhone);
+        return false;
+    }
+    else {
+        if (!validatePhone(phoneRegis.value)) {
+            notiRegis('block', 'Anh vui lòng nhập đúng số điện thoại của mình ạ', phoneRegis, spanPhone);
+            return false;
+        }
+        else {
+            notiRegis('none', '', null, spanPhone);
+            return true;
+        }
+    }
+}
+
+const checkEmailRegis = () => {
+    if (emailRegis.value == '') {
+        notiRegis('block', 'Anh vui lòng nhập email của mình ạ', emailRegis, spanEmail);
+        return false;
+    }
+    else {
+        if (!validateEmail(emailRegis.value)) {
+            notiRegis('block', 'Anh vui lòng nhập đúng email của mình ạ', emailRegis, spanEmail);
+            return false;
+        }
+        else {
+            notiRegis('none', '', null, spanEmail);
+            return true;
+        }
+    }
+}
+
+const checkPasswordRegis = () => {
+    if (passwordRegis.value == '') {
+        notiRegis('block', 'Anh vui lòng nhập mật khẩu của mình ạ', passwordRegis, spanPass);
+        return false;
+    }
+    else {
+        if (!validatePassword(passwordRegis.value)) {
+            notiRegis('block', 'Mật khẩu phải có ít nhất 8 kí tự, trong đó có ít nhất 1 kí tự số và 1 kí tự in hoa', passwordRegis, spanPass);
+            return false;
+        }
+        else {
+            notiRegis('none', '', null, spanPass);
+            return true;
+        }
+    }
+}
+
+btnRegis.addEventListener('click', async (e) => {
+    e.preventDefault();
+    checkNameRegis();
+    checkPhoneRegis();
+    checkEmailRegis();
+    checkPasswordRegis();
+})
+
+phoneRegis.onfocus = () => {
+    checkNameRegis();
+}
+emailRegis.onfocus = () => {
+    checkNameRegis();
+    checkPhoneRegis();
+}
+passwordRegis.onfocus = () => {
+    checkNameRegis();
+    checkPhoneRegis();
+    checkEmailRegis();
+}
+
+
+
+
 // check Token 
 const accessToken = `${window.localStorage.getItem('accessToken')}`;
 if (accessToken != `null`) {
@@ -108,16 +212,21 @@ if (accessToken != `null`) {
             window.location.href = '/';
         }
     }
+}
+async function checkToken() {
+    return (await instance.post('/checkToken', {
+        data: {
+            accessToken: accessToken,
+        }
+    })).data;
+}
 
-
-
-    async function checkToken() {
-        return (await instance.post('/checkToken', {
-            data: {
-                accessToken: accessToken,
-            }
-        })).data;
-    }
+async function checkDuplicatePhone(phone) {
+    return (await instance.post('/regis/checkDuplicatePhone', {
+        data: {
+            phone: phone
+        }
+    }))
 }
 
 async function login() {
@@ -127,4 +236,21 @@ async function login() {
             password: inputPassword.value,
         }
     })).data;
+}
+
+
+const validateEmail = (email) => {
+    return String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+};
+
+const validatePhone = (phone) => {
+    return /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/.test(phone);
+}
+
+const validatePassword = (pass) => {
+    return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(pass);
 }
