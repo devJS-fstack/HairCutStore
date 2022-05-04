@@ -48,6 +48,14 @@ app.locals._user = {
     nameUser: '',
     arr: [],
 }
+
+app.locals._userRegis = {
+    verifyNumber: 0,
+    name: '',
+    phone: '',
+    email: '',
+    password: '',
+}
 app.locals._service = {
     serviceIds: [],
 }

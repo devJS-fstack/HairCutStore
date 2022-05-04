@@ -107,3 +107,8 @@ if (accessToken != `null`) {
 }
 
 
+window.addEventListener('back', (e) => {
+    e.preventDefault();
+})
+
+

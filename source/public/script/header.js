@@ -104,20 +104,27 @@ const checkNameRegis = () => {
         return true;
     }
 }
-
-const checkPhoneRegis = () => {
+var checkPhoneVar = false;
+const checkPhoneRegis = async () => {
     if (phoneRegis.value == '') {
         notiRegis('block', 'Anh vui lòng nhập số điện thoại của mình ạ', phoneRegis, spanPhone);
-        return false;
+        checkPhoneVar = false;
     }
     else {
         if (!validatePhone(phoneRegis.value)) {
             notiRegis('block', 'Anh vui lòng nhập đúng số điện thoại của mình ạ', phoneRegis, spanPhone);
-            return false;
+            checkPhoneVar = false;
         }
         else {
-            notiRegis('none', '', null, spanPhone);
-            return true;
+            const { status } = await checkDuplicatePhone(phoneRegis.value);
+            if (status == 'found') {
+                notiRegis('block', 'Số điện thoại này đã được dùng, anh vui lòng nhập lại ạ', phoneRegis, spanPhone);
+                checkPhoneVar = false;
+            }
+            else {
+                notiRegis('none', '', null, spanPhone);
+                checkPhoneVar = true;
+            }
         }
     }
 }
@@ -156,25 +163,41 @@ const checkPasswordRegis = () => {
     }
 }
 
+const verifyEmail_form = document.getElementById('verifyEmail');
+const verifyPhone_input = document.getElementById('verify-input');
+
 btnRegis.addEventListener('click', async (e) => {
     e.preventDefault();
-    checkNameRegis();
-    checkPhoneRegis();
-    checkEmailRegis();
-    checkPasswordRegis();
+    if (checkNameRegis()) {
+        checkPhoneRegis();
+        if (checkPhoneVar) {
+            if (checkEmailRegis()) {
+                if (checkPasswordRegis()) {
+                    formRegis.action = "/regis/verify-email"
+                    formRegis.submit();
+                }
+            }
+        }
+    }
 })
 
-phoneRegis.onfocus = () => {
+
+
+phoneRegis.onfocus = async () => {
     checkNameRegis();
 }
-emailRegis.onfocus = () => {
-    checkNameRegis();
-    checkPhoneRegis();
+emailRegis.onfocus = async () => {
+    if (checkNameRegis())
+        checkPhoneRegis();
 }
-passwordRegis.onfocus = () => {
-    checkNameRegis();
-    checkPhoneRegis();
-    checkEmailRegis();
+passwordRegis.onfocus = async () => {
+    if (checkNameRegis()) {
+        checkPhoneRegis();
+        if (checkPhoneVar) {
+            if (checkEmailRegis()) {
+            }
+        }
+    }
 }
 
 
@@ -226,7 +249,7 @@ async function checkDuplicatePhone(phone) {
         data: {
             phone: phone
         }
-    }))
+    })).data;
 }
 
 async function login() {

@@ -92,7 +92,7 @@
                     <div class="relative input-group input-group-sm mb-4">
                         <div class="input-group-prepend">
                         </div>
-                        <input type="tel" pattern="((09|03|07|08|05)+([0-9]{8})\b)" required class="form-control"
+                        <input type="number" pattern="((09|03|07|08|05)+([0-9]{8})\b)" required class="form-control"
                             aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Số di động"
                             name="inputPhone">
                         <span class="span-err__regis err-phone">Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra
@@ -123,6 +123,10 @@
             </div>
         </div>
     </div>
+</form>
+
+<form method="post" action="/regis/verify-email" id="verifyEmail" style="display:none">
+    <input id="verify-input" type="text" name="email">
 </form>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
