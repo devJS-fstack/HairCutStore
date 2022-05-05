@@ -7,8 +7,7 @@ const JWT = require('jsonwebtoken');
 require('dotenv').config();
 class HomeController {
     // Handle main home
-
-    getMain(req, res, next) {
+    async getMain(req, res, next) {
         var scripts = [{ script: '/js-handle/home.js' }]
         res.render('home', {
             scripts: scripts

@@ -37,7 +37,7 @@ if (accessToken != `null`) {
                 var monthBook = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : `0${d.getMonth() + 1}`
                 //minuteleft = 0;
                 console.log({ dayleft, hourleft, minuteleft });
-                if (minuteleft == 0) {
+                if (minuteleft <= 0) {
                     cancelForm.action = `/booking/cancel/?phoneBook=${phoneCus}&dateBook=${dateBook}&idShift=${idShift}&staffBook=${idStaff}`
                     cancelForm.submit();
                 }
@@ -106,9 +106,9 @@ if (accessToken != `null`) {
     }
 }
 
-
-window.addEventListener('back', (e) => {
-    e.preventDefault();
-})
-
-
+setTimeout(function () {
+    console.log('1')
+}, 1000)
+setTimeout(function () {
+    console.log('2')
+}, 1500)
