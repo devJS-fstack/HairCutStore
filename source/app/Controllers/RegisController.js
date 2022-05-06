@@ -34,6 +34,22 @@ class RegisController {
         }
     }
 
+    async checkDuplicateEmail(req, res) {
+        let checkDuplicate = await sequelize.query(`SELECT * FROM Customer WHERE EmailCustomer = '${req.body.data.email}'`, {
+            raw: true,
+            type: QueryTypes.SELECT
+        })
+        if (checkDuplicate.length > 0) {
+            res.status(200).json({
+                status: 'found',
+            })
+        } else {
+            res.status(200).json({
+                status: 'not found',
+            })
+        }
+    }
+
 
     async verifyEmail(req, res) {
         let userLocal = req.app.locals._userRegis;

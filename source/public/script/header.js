@@ -105,6 +105,7 @@ const checkNameRegis = () => {
     }
 }
 var checkPhoneVar = false;
+var checkEmailVar = false;
 const checkPhoneRegis = async () => {
     if (phoneRegis.value == '') {
         notiRegis('block', 'Anh vui lòng nhập số điện thoại của mình ạ', phoneRegis, spanPhone);
@@ -129,19 +130,26 @@ const checkPhoneRegis = async () => {
     }
 }
 
-const checkEmailRegis = () => {
+const checkEmailRegis = async () => {
     if (emailRegis.value == '') {
         notiRegis('block', 'Anh vui lòng nhập email của mình ạ', emailRegis, spanEmail);
-        return false;
+        checkEmailVar = false;
     }
     else {
         if (!validateEmail(emailRegis.value)) {
             notiRegis('block', 'Anh vui lòng nhập đúng email của mình ạ', emailRegis, spanEmail);
-            return false;
+            checkEmailVar = false;
         }
         else {
-            notiRegis('none', '', null, spanEmail);
-            return true;
+            const { status } = await checkDuplicateEmail(emailRegis.value);
+            if (status == 'found') {
+                notiRegis('block', 'Email này đã được dùng, anh vui lòng nhập lại ạ', emailRegis, spanEmail);
+                checkEmailVar = false;
+            }
+            else {
+                notiRegis('none', '', null, spanEmail);
+                checkEmailVar = true;
+            }
         }
     }
 }
@@ -171,7 +179,8 @@ btnRegis.addEventListener('click', async (e) => {
     if (checkNameRegis()) {
         checkPhoneRegis();
         if (checkPhoneVar) {
-            if (checkEmailRegis()) {
+            checkEmailRegis();
+            if (checkEmailVar) {
                 if (checkPasswordRegis()) {
                     formRegis.action = "/regis/verify-email"
                     formRegis.submit();
@@ -194,7 +203,8 @@ passwordRegis.onfocus = async () => {
     if (checkNameRegis()) {
         checkPhoneRegis();
         if (checkPhoneVar) {
-            if (checkEmailRegis()) {
+            checkEmailRegis();
+            if (checkEmailVar) {
             }
         }
     }
@@ -248,6 +258,14 @@ async function checkDuplicatePhone(phone) {
     return (await instance.post('/regis/checkDuplicatePhone', {
         data: {
             phone: phone
+        }
+    })).data;
+}
+
+async function checkDuplicateEmail(email) {
+    return (await instance.post('/regis/checkDuplicateEmail', {
+        data: {
+            email: email
         }
     })).data;
 }

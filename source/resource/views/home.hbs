@@ -44,15 +44,9 @@
         </div>
         <div class="card-body">
             <h5 class="card-title">Cắt xong trả tiền, hủy lịch không sao</h5>
-            {{#if phoneCustomer}}
-            <input type="tel" pattern="((09|03|07|08|05)+([0-9]{8})\b)" required class="form-control wid-40pt"
-                aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Nhập SĐT để đặt lịch"
-                name="inputPhone" value={{{phoneCustomer}}} id="input-phone">
-            {{else}}
-            <input type="tel" pattern="((09|03|07|08|05)+([0-9]{8})\b)" required class="form-control wid-40pt"
+            <input type="number" pattern="((09|03|07|08|05)+([0-9]{8})\b)" required class="form-control wid-40pt"
                 aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Nhập SĐT để đặt lịch"
                 name="inputPhone" id="input-phone">
-            {{/if}}
             <button class="btn-booking btn btn-primary">Đặt lịch ngay</button>
         </div>
     </div>

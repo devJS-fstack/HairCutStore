@@ -2,20 +2,37 @@ const btnBook = document.querySelector('.btn-booking');
 const formBook = document.getElementById('form-booking');
 const inputPhone = document.getElementById('input-phone');
 
+
 var phoneCus = `${window.localStorage.getItem('phoneCustomer')}`;
 const bookingElement = document.querySelector('.list-booking-infor');
 const cancelForm = document.getElementById('cancelBookForm');
 if (phoneCus != 'null') {
     inputPhone.value = phoneCus;
 }
-btnBook.addEventListener('click', () => {
-    formBook.action = `/booking/?phone=${inputPhone.value}&storeId=0&step=0`;
+btnBook.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (inputPhone.value == phoneCus) {
+        const { status } = await checkToken();
+        if (status == 'success') {
+            formBook.action = `/booking/?phone=${phoneCus}&storeId=0&step=0`;
+            formBook.submit();
+        }
+    }
+    else {
+        const { status } = await checkDuplicatePhone(inputPhone.value);
+        console.log(status);
+        if (status == 'found') {
+            $('#modalLogin').modal('show');
+            inputAccount.value = inputPhone.value;
+        }
+        else {
+            $('#regisModal').modal('show');
+            phoneRegis.value = inputPhone.value;
+        }
+    }
 })
 
 if (accessToken != `null`) {
-
-
-
     // handle getdata
     (async () => {
         const { status, phoneCustomer } = await checkToken();
@@ -106,9 +123,3 @@ if (accessToken != `null`) {
     }
 }
 
-setTimeout(function () {
-    console.log('1')
-}, 1000)
-setTimeout(function () {
-    console.log('2')
-}, 1500)
