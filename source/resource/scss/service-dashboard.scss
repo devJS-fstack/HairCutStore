@@ -1,0 +1,188 @@
+a,
+div,
+p {
+    font-size: calc(1rem - 2px);
+    line-height: 1.5rem;
+}
+
+.page-content {
+    border-radius: 5px;
+    min-height: 600px;
+    overflow-x: hidden;
+    padding: 1.5rem 1.75rem;
+    background: radial-gradient(circle, #1a2049 0%, #13162f 100%);
+}
+
+.service-and-category {
+    display: flex;
+    gap: 24px;
+}
+
+.adm-slidebar-menu-wrapper__content {
+    height: 100%;
+}
+
+.services-categories {
+    border-right: 1px solid #dee1e6;
+    padding-right: 14px;
+    width: 306px;
+    margin-bottom: 1rem;
+}
+
+.services-categories>div {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.services-categories>div h5 {
+    line-height: 40px;
+}
+
+.services-categories>div h5 span {
+    color: #99a1b1;
+}
+
+.categories-list .category.active {
+    background-color: #005aee;
+    border-radius: 5px;
+    color: #fff;
+    border-bottom: none;
+}
+
+.all-categories {
+    padding-left: 40px !important;
+}
+
+.categories-list .category {
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    align-items: center;
+    border-bottom: 1px solid #dee1e6;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.categories-list .category .category-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.categories-list .category.active .num-services {
+    color: hsla(0, 0%, 100%, .7);
+}
+
+.categories-list .category.acive .category-name {
+    color: hsla(0, 0%, 100%, .7);
+}
+
+.overflow-ellipsis {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-actions__drop-down {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.el-dropdown {
+    color: #14233d;
+    display: inline-block;
+    font-size: 14px;
+    position: relative;
+}
+
+.adm-btn {
+    height: 32px;
+    padding: 0;
+    width: 32px;
+    align-items: center;
+    border-radius: 7px;
+    display: inline-flex;
+    font-weight: 500;
+    justify-content: center;
+    white-space: nowrap;
+    --spinner-container-width: 20px;
+    --spinner-container-height: 20px;
+    font-size: 14px;
+    line-height: 20px;
+    background-color: transparent;
+    outline: none !important;
+    border: none;
+    cursor: pointer;
+}
+
+.adm-btn__icon {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+}
+
+.adm-btn__icon i {
+    color: #fff;
+}
+
+.adm-button__filled__grey {
+    background-color: #edeff3;
+    color: #00143c;
+}
+
+.services-list {
+    overflow: hidden;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.services-list-header {
+    height: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.services-list-header h5 span {
+    color: #99a1b9;
+    ;
+}
+
+.services-list-content .service-list {
+    padding: 0 2px;
+}
+
+.head-row {
+    border-bottom: 1px solid #dee1e6;
+    padding: 0 0.5rem;
+}
+
+.el-row {
+    box-sizing: border-box;
+}
+
+.el-row::before {
+    display: table;
+    content: "";
+}
+
+.el-col-sm-10 {
+    width: 41.66667%;
+}
+
+.el-col-sm-4 {
+    width: 16.66667%;
+}
+
+.el-col {
+    box-sizing: border-box;
+    float: left;
+}
+
+.head-row p {
+    color: #99a1b1;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+}

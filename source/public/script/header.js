@@ -9,6 +9,7 @@ const dropDownMenu = document.querySelector('.dropdown-menu');
 const btnRegis = document.getElementById('btn-regis');
 const formRegis = document.getElementById('formRegis');
 const modalRegis = document.getElementById('regisModal');
+const navheader = document.querySelector('.navbar');
 
 
 // create instance axios config
