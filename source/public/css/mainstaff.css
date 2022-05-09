@@ -578,11 +578,11 @@ body {
   .time.is-wait {
     background: #4255d3; }
 
-.table .status {
+.status {
   color: #1aa385;
   display: inline-flex;
   align-items: center; }
-  .table .status svg {
+  .status svg {
     margin-right: 6px;
     width: 22px;
     height: 22px;
@@ -590,15 +590,15 @@ body {
     border-radius: 4px;
     background-color: #142940;
     color: currentColor; }
-  .table .status.is-red {
+  .status.is-red {
     color: #d14b69; }
-    .table .status.is-red svg {
+    .status.is-red svg {
       background: #2e2142;
       color: currentcolor; }
-  .table .status.is-wait {
+  .status.is-wait {
     color: #3E4EC2;
     position: relative; }
-    .table .status.is-wait:before {
+    .status.is-wait:before {
       width: 22px;
       height: 22px;
       position: absolute;
@@ -607,7 +607,7 @@ body {
       content: "";
       background: #1a214d;
       border-radius: 4px; }
-    .table .status.is-wait svg {
+    .status.is-wait svg {
       background-color: transparent;
       color: currentcolor;
       animation: turn 2s linear infinite both; }

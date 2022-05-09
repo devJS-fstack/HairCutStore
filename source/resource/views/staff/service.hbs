@@ -56,7 +56,7 @@
                 </svg>
             </a>
         </div>
-        <div class="main-container">
+        <div class="main-container" style="display: block">
             <div class="user-box third-box service-box">
                 <div class="adm-services">
                     <div class="adm-page-header">
@@ -84,20 +84,22 @@
                         <div class="adm-slidebar-menu-wrapper__content">
                             <div class="services-categories">
                                 <div>
-                                    <h5>Danh Mục <span>(2)</span> </h5>
+                                    <h5>Danh Mục <span>({{lengthCategory}})</span> </h5>
                                 </div>
                                 <div class="categories-list mb-3">
                                     <div class="category all-categories active">
                                         <div class="category-name">
                                             <div>Tất Cả Dịch Vụ</div>
-                                            <span class="num-services">4 Dịch Vụ</span>
+                                            <span class="num-services">{{allService}} Dịch Vụ</span>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="category">
+                                        {{#each categories}}
+                                        <div data-type={{this.IDTypeS}} class="category">
                                             <div class="category-name overflow-ellipsis">
-                                                <div>Cắt Tóc</div>
-                                                <span class="num-services">4 Dịch Vụ</span>
+                                                <div class="name-type-service" style="text-transform: capitalize;">
+                                                    {{this.NameService}}</div>
+                                                <span class="num-services">{{this.AmountService}} Dịch Vụ</span>
                                             </div>
                                             <div class="adm-actions__drop-down">
                                                 <div class="el-dropdown">
@@ -107,12 +109,35 @@
                                                             <i class="fa-solid fa-ellipsis"></i>
                                                         </span>
                                                     </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#">Chỉnh sửa</a>
-                                                    </div>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <li data-type={{this.IDTypeS}}
+                                                            class="edit-category dropdown-item el-dropdown-menu"
+                                                            data-target="#edit-service_modal" data-toggle="modal">
+                                                            <div class="adm-dropdown-item__wrapper is-with-icon">
+                                                                <div class="adm-dropdown-item__icon">
+                                                                    <i class="fa-solid fa-pencil"></i>
+                                                                </div>
+                                                                <div class="adm-dropdown-item__label">
+                                                                    Chỉnh sửa
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li data-type={{this.IDTypeS}}
+                                                            class="delete-category dropdown-item el-dropdown-menu">
+                                                            <div class="adm-dropdown-item__wrapper is-red is-with-icon">
+                                                                <div class="adm-dropdown-item__icon">
+                                                                    <i class="fa-solid fa-trash-can"></i>
+                                                                </div>
+                                                                <div class="adm-dropdown-item__label">
+                                                                    Xóa
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
+                                        {{/each}}
                                     </div>
                                 </div>
                                 <button data-toggle="modal" data-target="#add-service_modal"
@@ -129,18 +154,17 @@
                             <div class="services-list-header">
                                 <h5>Tất Cả Dịch Vụ <span>(4)</span></h5>
                             </div>
-
-                            <div class="services-list-content" style="height:40px">
-                                <div class="service-list" style="height:100%">
-                                    <div class="head-row" style="height:100%">
-                                        <div class="el-row" style="margin-left: -8px; margin-right: -8px;">
+                            <div class="services-list-content">
+                                <div class="service-list">
+                                    <div class="head-row">
+                                        <div class="el-row" style="margin-left: -8px; margin-right: -8px; height:32px">
                                             <div class="el-col el-col-24 el-col-sm-10"
                                                 style="padding-left: 8px; padding-right: 8px;">
                                                 <p>Tên</p>
                                             </div>
                                             <div class="el-col el-col-24 el-col-sm-4"
                                                 style="padding-left: 8px; padding-right: 8px;">
-                                                <p>Thời hạn</p>
+                                                <p>Trạng Thái</p>
                                             </div>
                                             <div class="el-col el-col-24 el-col-sm-4"
                                                 style="padding-left: 8px; padding-right: 8px;">
@@ -154,49 +178,118 @@
                                     </div>
                                     <div>
                                         <div>
-                                            <div class="adm-service">
+                                            {{#each services}}
+                                            <div data-type={{this.TypeService}} class="adm-service"
+                                                style="border-color: rgb(192, 235, 117);background-color: #182e5b;">
                                                 <div class="adm-service__data">
-                                                    <div class="flex-center el-row is-align-middle">
-                                                        <div class="service-name-column el-col el-col-24 el-col-sm-10"
+                                                    <div class="flex-center el-row is-align-middle"
+                                                        style="margin-left: -8px; margin-right: -8px;">
+                                                        <div class="service-name-col el-col el-col-24 el-col-sm-10"
                                                             style="padding-left: 8px; padding-right: 8px;">
                                                             <div class="service-name overflow-ellipsis flex-center">
-                                                                <h5 class="overflow-ellipsis">Cạo râu</h5>
+                                                                <div class="adm-avatar size-40 margin-right--10 margin-left--0"
+                                                                    style="background-image: url(
+                                                                            {{this.PathImg}});
+                                                                            border: 3px solid rgb(255, 255, 255); color:
+                                                                            rgb(19, 150, 110); z-index: 5;">
+                                                                </div>
+                                                                <h5 class="overflow-ellipsis mb-0"
+                                                                    style="font-size: 15px;">{{this.NameService}}
+                                                                </h5>
                                                             </div>
-                                                            <div class="el-col el-col-24 el-col-sm-4"
-                                                                style="padding-left: 8px; padding-right: 8px;">
-                                                                <span>30 min</span>
-                                                            </div>
-                                                            <div class="el-col el-col-24 el-col-sm-4"
-                                                                style="padding-left: 8px; padding-right: 8px;">
-                                                                <span>$100</span>
-                                                            </div>
-                                                            <div class="el-col el-col-24 el-col-sm-4"
-                                                                style="padding-left: 8px; padding-right: 8px;">
-                                                                <span>
-                                                                    <span class="el-popover__reference-wrapper">
-                                                                        <div
-                                                                            class="member-thumbs el-popover__reference">
-                                                                            <div class="adm-avatar size-32 margin-right-0 margin-left--10"
-                                                                                style="background-image: url("
-                                                                                https://babershop.admin.trafft.com/api/v1/public/media/3d9a8071-df4b-4b55-a05a-6f6a68371d21?size=avatar");
-                                                                                border: 3px solid rgb(255, 255, 255);
-                                                                                color: rgb(19, 150, 110); z-index: 5;">
-                                                                            </div>
-                                                                            <div class="adm-avatar size-32 margin-right-0 margin-left--10"
-                                                                                style="background-image: url("
-                                                                                https://babershop.admin.trafft.com/api/v1/public/media/29b53508-de3d-4bdb-9cc0-932ba9939ff2?size=avatar");
-                                                                                border: 3px solid rgb(255, 255, 255);
-                                                                                color: rgb(19, 150, 110); z-index: 5;">
+                                                        </div>
 
-                                                                            </div>
+                                                        <div class="el-col el-col-24 el-col-sm-4"
+                                                            style="padding-left: 8px; padding-right: 8px;">
+                                                            <div class="status is-green"><svg viewBox="0 0 24 24"
+                                                                    fill="none" stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path d="M20 6L9 17l-5-5" />
+                                                                </svg>
+                                                                Active
+                                                            </div>
+                                                        </div>
+                                                        <div class="el-col el-col-24 el-col-sm-4"
+                                                            style="padding-left: 8px; padding-right: 8px;">
+                                                            <span>${{this.ListPrice}}</span>
+                                                        </div>
+                                                        <div class="el-col el-col-24 el-col-sm-4"
+                                                            style="padding-left: 8px; padding-right: 8px;">
+                                                            <span>
+                                                                <span class="el-popover__reference-wrapper">
+                                                                    <div data-service="{{this.IDService}}"
+                                                                        class="member-thumbs el-popover__reference">
+                                                                        {{!-- <div
+                                                                            class="adm-avatar size-32 margin-right-0 margin-left--10"
+                                                                            style="background-image: url(
+                                                                            https://babershop.admin.trafft.com/api/v1/public/media/3d9a8071-df4b-4b55-a05a-6f6a68371d21?size=avatar);
+                                                                            border: 3px solid rgb(255, 255, 255); color:
+                                                                            rgb(19, 150, 110); z-index: 5;">
                                                                         </div>
-                                                                    </span>
+                                                                        <div class="adm-avatar size-32 margin-right-0 margin-left--10"
+                                                                            style="background-image: url(
+                                                                            https://babershop.admin.trafft.com/api/v1/public/media/29b53508-de3d-4bdb-9cc0-932ba9939ff2?size=avatar);
+                                                                            border: 3px solid rgb(255, 255, 255); color:
+                                                                            rgb(19, 150, 110); z-index: 5;">
+                                                                        </div>
+                                                                        <div class="member-thumbs__more-item adm-avatar size-32 margin-right-0 margin-left--10"
+                                                                            style="background-color: rgb(230, 239, 254);
+                                                                            border: 3px solid rgb(255, 255, 255);
+                                                                            color: rgb(0, 90, 238);">+3
+                                                                        </div> --}}
+                                                                    </div>
                                                                 </span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="el-col el-col-24 el-col-sm-2"
+                                                            style="padding-left: 8px; padding-right: 8px;">
+                                                            <div class="adm-actions__drop-down">
+                                                                <div class="el-dropdown">
+                                                                    <button aria-haspopup="true" aria-expanded="false"
+                                                                        data-toggle="dropdown" class="adm-btn"
+                                                                        id="dropdownMenuButton">
+                                                                        <span class="adm-btn__icon">
+                                                                            <i class="fa-solid fa-ellipsis"></i>
+                                                                        </span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <li data-type={{this.IDTypeS}}
+                                                                            class="edit-category dropdown-item el-dropdown-menu"
+                                                                            data-target="#edit-service_modal"
+                                                                            data-toggle="modal">
+                                                                            <div
+                                                                                class="adm-dropdown-item__wrapper is-with-icon">
+                                                                                <div class="adm-dropdown-item__icon">
+                                                                                    <i class="fa-solid fa-pencil"></i>
+                                                                                </div>
+                                                                                <div class="adm-dropdown-item__label">
+                                                                                    Chỉnh sửa
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li data-type={{this.IDTypeS}}
+                                                                            class="delete-category dropdown-item el-dropdown-menu">
+                                                                            <div
+                                                                                class="adm-dropdown-item__wrapper is-red is-with-icon">
+                                                                                <div class="adm-dropdown-item__icon">
+                                                                                    <i
+                                                                                        class="fa-solid fa-trash-can"></i>
+                                                                                </div>
+                                                                                <div class="adm-dropdown-item__label">
+                                                                                    Xóa
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            {{/each}}
+
                                         </div>
                                     </div>
                                 </div>
@@ -214,18 +307,149 @@
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="el-dialog__header">
+                        <span class="adm-modal-title">
+                            Thêm Danh Mục
+                        </span>
+                        <button id="close-add__category" type="button" class="close" data-dismiss="modal"
+                            aria-label="Close" style="outline: none;">
                             <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
-                    <div class="modal-body">
-                        ...
+                    <div class="el-dialog__body">
+                        <form class="el-form" id="addCategory">
+                            <div class="el-row" style="margin-left: -8px; margin-right: -8px;">
+                                <div class="el-col el-col-24 el-col-sm-24"
+                                    style="padding-left: 8px; padding-right: 8px;">
+                                    <div class="adm-form-item">
+                                        <div class="el-form-item is-success is-required">
+                                            <label for="name" class="el-form-item__label">
+                                                Tên Danh Mục
+                                            </label>
+                                            <div class="el-form-item__content">
+                                                <div class="adm-input-wrapper">
+                                                    <div
+                                                        class="el-input el-input__default adm-input adm-input__size-default">
+                                                        <input id="input-category" type="text" autocomplete="nope"
+                                                            maxlength="100" iconstart iconend rows="2" name tags
+                                                            class="el-input__inner">
+                                                    </div>
+                                                </div>
+                                                <div class="adm-form-item__error">
+                                                    {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="adm-form-item">
+                                        <div class="el-form-item is-success is-required">
+                                            <label for="name" class="el-form-item__label">
+                                                Mô Tả Danh Mục
+                                            </label>
+                                            <div class="el-form-item__content">
+                                                <div class="adm-input-wrapper">
+                                                    <div
+                                                        class="el-input el-input__default adm-input adm-input__size-default">
+                                                        <input id="input-des-category" type="text" autocomplete="nope"
+                                                            maxlength="100" iconstart iconend rows="2" name tags
+                                                            class="el-input__inner">
+                                                    </div>
+                                                </div>
+                                                <div class="adm-form-item__error">
+                                                    {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button id="close-btn__add" data-dismiss="modal"
+                            class="adm-button adm-button__filled__grey adm-button-size__medium" style="border:none">
+                            <span>Đóng</span>
+                        </button>
+                        <button id="adm-add-category"
+                            class="adm-button adm-button__filled__blue adm-button-size__medium ml-3"
+                            style="border:none">
+                            <span>Thêm Danh Mục</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="edit-service_modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="el-dialog__header">
+                        <span class="adm-modal-title">
+                            Chỉnh Sửa Danh Mục
+                        </span>
+                        <button id="close-edit__category" type="button" class="close" data-dismiss="modal"
+                            aria-label="Close" style="outline: none;">
+                            <span aria-hidden="true">&times;</span>
+                    </div>
+                    <div class="el-dialog__body">
+                        <form class="el-form" id="addCategory">
+                            <div class="el-row" style="margin-left: -8px; margin-right: -8px;">
+                                <div class="el-col el-col-24 el-col-sm-24"
+                                    style="padding-left: 8px; padding-right: 8px;">
+                                    <div class="adm-form-item">
+                                        <div class="el-form-item is-success is-required">
+                                            <label for="name" class="el-form-item__label">
+                                                Tên Danh Mục
+                                            </label>
+                                            <div class="el-form-item__content">
+                                                <div class="adm-input-wrapper">
+                                                    <div
+                                                        class="el-input el-input__default adm-input adm-input__size-default">
+                                                        <input id="input-category__edit" type="text" autocomplete="nope"
+                                                            maxlength="100" iconstart iconend rows="2" name tags
+                                                            class="el-input__inner">
+                                                    </div>
+                                                </div>
+                                                <div class="adm-form-item__error">
+                                                    {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="adm-form-item">
+                                        <div class="el-form-item is-success is-required">
+                                            <label for="name" class="el-form-item__label">
+                                                Mô Tả Danh Mục
+                                            </label>
+                                            <div class="el-form-item__content">
+                                                <div class="adm-input-wrapper">
+                                                    <div
+                                                        class="el-input el-input__default adm-input adm-input__size-default">
+                                                        <input id="input-des-category__edit" type="text"
+                                                            autocomplete="nope" maxlength="100" iconstart iconend
+                                                            rows="2" name tags class="el-input__inner">
+                                                    </div>
+                                                </div>
+                                                <div class="adm-form-item__error">
+                                                    {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="close-btn__edit" data-dismiss="modal"
+                            class="adm-button adm-button__filled__grey adm-button-size__medium" style="border:none">
+                            <span>Đóng</span>
+                        </button>
+                        <button id="adm-edit-category"
+                            class="adm-button adm-button__filled__blue adm-button-size__medium ml-3"
+                            style="border:none">
+                            <span>Lưu Thay Đổi</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -235,5 +459,5 @@
 
 </html>
 
-<script src="../script/staff/main.js">
+<script src="../script/staff/service.js">
 </script>
