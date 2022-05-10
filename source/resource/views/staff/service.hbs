@@ -98,7 +98,7 @@
                                         <div data-type={{this.IDTypeS}} class="category">
                                             <div class="category-name overflow-ellipsis">
                                                 <div class="name-type-service" style="text-transform: capitalize;">
-                                                    {{this.NameService}}</div>
+                                                    {{this.NameTypeService}}</div>
                                                 <span class="num-services">{{this.AmountService}} Dịch Vụ</span>
                                             </div>
                                             <div class="adm-actions__drop-down">
@@ -112,7 +112,7 @@
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         <li data-type={{this.IDTypeS}}
                                                             class="edit-category dropdown-item el-dropdown-menu"
-                                                            data-target="#edit-service_modal" data-toggle="modal">
+                                                            data-target="#edit-category_modal" data-toggle="modal">
                                                             <div class="adm-dropdown-item__wrapper is-with-icon">
                                                                 <div class="adm-dropdown-item__icon">
                                                                     <i class="fa-solid fa-pencil"></i>
@@ -140,8 +140,8 @@
                                         {{/each}}
                                     </div>
                                 </div>
-                                <button data-toggle="modal" data-target="#add-service_modal"
-                                    class="adm-button adm-button-service adm-button__filled__grey" style="width:100%">
+                                <button data-toggle="modal" data-target="#add-category_modal"
+                                    class="adm-button adm-button-category adm-button__filled__grey" style="width:100%">
                                     <span class="adm-button__icon-wrapper">
                                         <i class="fa-solid fa-plus"></i>
                                     </span>
@@ -254,8 +254,8 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu"
                                                                         aria-labelledby="dropdownMenuButton">
-                                                                        <li data-type={{this.IDTypeS}}
-                                                                            class="edit-category dropdown-item el-dropdown-menu"
+                                                                        <li data-service={{this.IDService}}
+                                                                            class="edit-service dropdown-item el-dropdown-menu"
                                                                             data-target="#edit-service_modal"
                                                                             data-toggle="modal">
                                                                             <div
@@ -268,8 +268,8 @@
                                                                                 </div>
                                                                             </div>
                                                                         </li>
-                                                                        <li data-type={{this.IDTypeS}}
-                                                                            class="delete-category dropdown-item el-dropdown-menu">
+                                                                        <li data-service={{this.IDService}}
+                                                                            class="delete-service dropdown-item el-dropdown-menu">
                                                                             <div
                                                                                 class="adm-dropdown-item__wrapper is-red is-with-icon">
                                                                                 <div class="adm-dropdown-item__icon">
@@ -302,8 +302,10 @@
         </div>
 
 
+        {{!-- Moodal --}}
 
-        <div class="modal fade" id="add-service_modal" tabindex="-1" role="dialog"
+        {{!-- Modal add category --}}
+        <div class="modal fade" id="add-category_modal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -378,8 +380,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="edit-service_modal" tabindex="-1" role="dialog"
+        {{!-- Modal edit category --}}
+        <div class="modal fade" id="edit-category_modal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -392,7 +394,7 @@
                             <span aria-hidden="true">&times;</span>
                     </div>
                     <div class="el-dialog__body">
-                        <form class="el-form" id="addCategory">
+                        <form class="el-form" id="editCategory">
                             <div class="el-row" style="margin-left: -8px; margin-right: -8px;">
                                 <div class="el-col el-col-24 el-col-sm-24"
                                     style="padding-left: 8px; padding-right: 8px;">
@@ -455,9 +457,265 @@
             </div>
         </div>
 
+        {{!-- Modal add service --}}
+        <div class="modal fade" id="add-service_modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document"
+                style="margin-top: 70px; width: 750px ; max-width:750px">
+                <div class="modal-content">
+                    <div class="el-dialog__header">
+                        <span class="adm-modal-title">
+                            Tạo Dịch Vụ
+                        </span>
+                        <button id="close-add__category" type="button" class="close" data-dismiss="modal"
+                            aria-label="Close" style="outline: none;">
+                            <span aria-hidden="true">&times;</span>
+                    </div>
+                    <div class="el-dialog__body">
+                        <form class="el-form" id="addServiceForm">
+                            <div class="el-row" style="margin-left: -8px; margin-right: -8px;">
+                                <div class="el-col el-col-24 el-col-sm-7"
+                                    style="padding-left: 8px; padding-right: 8px;">
+                                    <div class="adm-form-item">
+                                        <div class="el-form-item">
+                                            <label for="name" class="el-form-item__label">
+                                                Ảnh Dịch Vụ
+                                            </label>
+                                            <div class="el-form-item__content">
+                                                <div class="el-form-item__uploader">
+                                                    <div class="adm-square-uploader__image" style="height: 193px;">
+                                                        <div>
+                                                            <div class="el-upload el-upload--picture">
+                                                                <div class="el-upload-dragger">
+                                                                    <div class="el-upload-dragger__upload">
+                                                                        <div>
+                                                                            <i
+                                                                                class="fa-solid fa-upload adm-icon adm-icon__extraLarge adm-icon__primary"></i>
+                                                                            <div class="el-upload__text">
+                                                                                Nhấp vào để tải ảnh lên
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="file" name="file"
+                                                                    accept="image/png, image/jpeg"
+                                                                    class="el-upload__input">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="el-col el-col-24 el-col-sm-17"
+                                    style="padding-left: 8px; padding-right: 8px;">
+                                    <div class="el-row" style="margin-left: -8px; margin-right: -8px;">
+                                        <div class="el-col el-col-24 el-col-sm-24"
+                                            style="padding-left: 8px; padding-right: 8px;">
+                                            <div class="adm-form-item">
+                                                <div class="el-form-item is-success is-required">
+                                                    <label for="name" class="el-form-item__label">
+                                                        Tên Dịch Vụ
+                                                    </label>
+                                                    <div class="el-form-item__content">
+                                                        <div class="adm-input-wrapper">
+                                                            <div
+                                                                class="el-input el-input__default adm-input adm-input__size-default">
+                                                                <input id="input-category__add" type="text"
+                                                                    autocomplete="nope" maxlength="100" iconstart
+                                                                    iconend rows="2" name tags class="el-input__inner">
+                                                            </div>
+                                                        </div>
+                                                        <div class="adm-form-item__error">
+                                                            {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="adm-form-item">
+                                                <div class="el-form-item is-success is-required">
+                                                    <label for="name" class="el-form-item__label">
+                                                        Danh Mục
+                                                    </label>
+                                                    <div class="el-form-item__content">
+                                                        <div class="adm-input-wrapper">
+                                                            <div
+                                                                class="el-input el-input__default adm-input adm-input__size-default">
+                                                                <input id="input-category-service__add" type="text"
+                                                                    readonly="readonly" autocomplete="off"
+                                                                    class="el-input__inner pointer"
+                                                                    placeholder="Lựa Chọn Danh Mục">
+                                                                <span class="el-input__suffix">
+                                                                    <span class="el-input__suffix__inner">
+                                                                        <i style="display:flex;align-items: center;justify-content: center;"
+                                                                            class="fa-solid fa-angle-up el-select__caret el-input__icon"></i>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="adm-form-item__error">
+                                                            {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="adm-form-item">
+                                                <div class="el-form-item is-success is-required">
+                                                    <label for="name" class="el-form-item__label">
+                                                        Mô Tả Dịch Vụ
+                                                    </label>
+                                                    <div class="el-form-item__content">
+                                                        <div class="adm-input-wrapper">
+                                                            <div
+                                                                class="el-input el-input__default adm-input adm-input__size-default">
+                                                                <input id="input-des-service__add" type="text"
+                                                                    autocomplete="nope" maxlength="100" iconstart
+                                                                    iconend rows="2" name tags class="el-input__inner">
+                                                            </div>
+                                                        </div>
+                                                        <div class="adm-form-item__error">
+                                                            {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="el-col el-col-24 el-col-sm-24"
+                                    style="padding-left: 8px; padding-right: 8px;">
+                                    <div class="el-row" style="margin-left: -8px; margin-right: -8px;">
+                                        <div class="one-row-form-item with-border-top">
+                                            <div class="one-row-form-item__left">
+                                                <div class="one-row-form-item__left__label semi-bold">Nhân Viên</div>
+                                            </div>
+                                            <div class="one-row-form-item__right" style="flex-basis: 320px;">
+                                                <div class="adm-form-item">
+                                                    <div class="el-form-item">
+                                                        <div class="el-form-item__content">
+                                                            <div class="adm-select-wrapper">
+                                                                <div
+                                                                    class="el-select el-select__default adm-select adm-select__size-default">
+                                                                    <div class="el-input">
+                                                                        <input id="input-employee-service" type="text"
+                                                                            readonly="readonly" autocomplete="off"
+                                                                            class="el-input__inner"
+                                                                            placeholder="Lựa Chọn Nhân Viên">
+                                                                        <span class="el-input__suffix">
+                                                                            <span class="el-input__suffix__inner">
+                                                                                <i style="align-items: center;"
+                                                                                    class="fa-solid fa-angle-up el-select__caret el-input__icon"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="adm-form-item__error">
+                                                                {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="el-col el-col-24 el-col-sm-24"
+                                    style="padding-left: 8px; padding-right: 8px;">
+                                    <div class="el-row" style="margin-left: -8px; margin-right: -8px;">
+                                        <div class="one-row-form-item with-border-top">
+                                            <div class="one-row-form-item__left">
+                                                <div class="one-row-form-item__left__label semi-bold">Đơn Giá</div>
+                                            </div>
+                                            <div class="one-row-form-item__right" style="flex-basis: 164px;">
+                                                <div class="adm-form-item">
+                                                    <div class="el-form-item">
+                                                        <div class="el-form-item__content">
+                                                            <div class="adm-select-wrapper">
+                                                                <div
+                                                                    class="el-select el-select__default adm-select adm-select__size-default">
+                                                                    <div class="el-input">
+                                                                        <input style="cursor:text" type="text"
+                                                                            autocomplete="off" class="el-input__inner">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="adm-form-item__error">
+                                                                {{!-- Bạn vui lòng nhập tên danh mục --}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="justify-content: flex-end !important">
+                        <button id="adm-btn-service__close" data-dismiss="modal"
+                            class="adm-button adm-button__filled__grey adm-button-size__medium" style="border:none">
+                            <span>Đóng</span>
+                        </button>
+                        <button id="adm-btn-service__add"
+                            class="adm-button adm-button__filled__blue adm-button-size__medium ml-3"
+                            style="border:none">
+                            <span>Thêm Dịch Vụ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{!-- Dropdown --}}
+        {{!-- Dropdown category --}}
+        <div class="el-select-dropdown el-popper adm-select-popper" id="dropdown-category__service"
+            style="min-width: 320px; transform-origin: center bottom; z-index: 2003; display: none;">
+            <div class="el-scrollbar">
+                <div class="el-select-dropdown__wrap el-scrollbar__wrap"
+                    style="margin-bottom: -17px; margin-right: -17px;">
+                    <ul class="el-scrollbar__view el-select-dropdown__list">
+                        {{#each categories}}
+                        <li data-type={{this.IDTypeS}}
+                            class="el-select-dropdown__item adm-select-option list-category__dropdown">
+                            <span>{{this.NameTypeService}}</span>
+                        </li>
+                        {{/each}}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Dropdown employee --}}
+        <div class="el-select-dropdown el-popper adm-select-popper" id="dropdown-employee__service"
+            style="min-width: 320px; transform-origin: center bottom; z-index: 2003; display: none;">
+            <div class="el-scrollbar">
+                <div class="el-select-dropdown__wrap el-scrollbar__wrap"
+                    style="margin-bottom: -17px; margin-right: -17px;">
+                    <ul class="el-scrollbar__view el-select-dropdown__list">
+                        {{#each categories}}
+                        <li data-type={{this.IDTypeS}}
+                            class="el-select-dropdown__item adm-select-option list-category__dropdown">
+                            <span>{{this.NameTypeService}}</span>
+                        </li>
+                        {{/each}}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
 </body>
 
 </html>
 
-<script src="../script/staff/service.js">
+<script src=" ../script/staff/service.js">
 </script>

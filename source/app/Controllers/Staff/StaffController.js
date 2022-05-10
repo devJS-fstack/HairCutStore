@@ -54,7 +54,7 @@ class StaffController {
         }
     }
     async createCategory(req, res) {
-        let createCategory = await sequelize.query(`INSERT INTO TypeService(IDTypeS,NameService,Description,AmountService)
+        let createCategory = await sequelize.query(`INSERT INTO TypeService(IDTypeS,NameTypeService,Description,AmountService)
         VALUES(${req.body.id},N'${req.body.name}',N'${req.body.desc}',0)
         `, {
             raw: true,
@@ -87,7 +87,7 @@ class StaffController {
     }
 
     async editCategory(req, res) {
-        let editCategory = await sequelize.query(`UPDATE TypeService SET NameService = N'${req.body.name}' , Description = N'${req.body.description}' WHERE IDTypeS = ${req.body.id}`)
+        let editCategory = await sequelize.query(`UPDATE TypeService SET NameTypeService = N'${req.body.name}' , Description = N'${req.body.description}' WHERE IDTypeS = ${req.body.id}`)
         return res.status(200).json({
             status: 'success',
         })
