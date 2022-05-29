@@ -58,7 +58,25 @@
                             </div>
                         </div>
 
-                        {{#each typeService1}}
+                        {{#each categories}}
+                        <div id="category{{this.IDTypeS}}" class="pad-lef-rigth-2" data-type={{this.IDTypeS}}>
+                            <div class="service">
+                                <div class="service-category">
+                                    <div class="category__name">{{this.NameTypeService}}</div>
+                                    <div class="category__number">
+                                        {{this.AmountService}} dịch vụ
+                                    </div>
+                                </div>
+                                <div class="service-list">
+                                    <div class="grid gap-4 grid-cols-2 list-services" data-type={{this.IDTypeS}}>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+
+                        {{!-- {{#each typeService1}}
                         <div id="category{{this.IDTypeS}}" class="pad-lef-rigth-2">
                             <div class="service">
                                 <div class="service-category">
@@ -208,7 +226,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{/each}}
+                        {{/each}} --}}
 
                     </div>
                     <div class="new-affix-v2">

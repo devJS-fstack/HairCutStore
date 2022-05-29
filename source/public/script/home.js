@@ -50,8 +50,8 @@ if (accessToken != `null`) {
                 var dayleftTittle = dayleft == 0 ? `` : `${dayleft} ngày `;
                 var hourleftTittle = hourleft == 0 ? `` : `${hourleft} giờ `;
                 var minuteleftTittle = minuteleft == 0 ? `` : `${minuteleft} phút `;
-                var dayBook = d.getDate() < 10 ? `0${d.getDate()}` : `0${d.getDate()}`
-                var monthBook = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : `0${d.getMonth() + 1}`
+                var dayBook = d.getDate() < 10 ? `0${d.getDate()}` : `${d.getDate()}`
+                var monthBook = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : `${d.getMonth() + 1}`
                 //minuteleft = 0;
                 console.log({ dayleft, hourleft, minuteleft });
                 if (minuteleft <= 0) {

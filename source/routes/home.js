@@ -9,6 +9,7 @@ router.post('/checkToken', homeController.checkToken)
 router.get('/status', homeController.status)
 router.post('/passport', passport.authenticate('local', { failureRedirect: '/' }), homeController.passportAuthen)
 router.post('/login', homeController.postLogin);
+router.post('/services', homeController.getServices);
 router.get('/', homeController.getMain);
 
 module.exports = router;

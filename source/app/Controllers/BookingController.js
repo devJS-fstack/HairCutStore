@@ -7,6 +7,7 @@ class BookingController {
         let user = req.app.locals._user;
         let service = req.app.locals._service;
         if (req.query.step == 0) {
+            req.app.locals._service = [];
             let cus = await sequelize.query(`SELECT * FROM Customer WHERE PhoneCustomer = '${req.body.inputPhone}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
@@ -85,21 +86,21 @@ class BookingController {
 
             let staffsInDate1 = await sequelize.query(`SELECT * FROM Staff as s, Store as st, RegisShift as r 
            WHERE s.IDStore = st.IDStore AND s.IDStore = ${req.query.storeId}
-            AND s.IDStaff = r.IDStaff
+            AND s.IDStaff = r.IDStaff AND Status = N'Hoạt Động'
              AND r.DateRegis = '${dateCurrent.getFullYear()}-${dateCurrent.getMonth() + 1}-${dateCurrent.getDate()}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
             })
             let staffsInDate2 = await sequelize.query(`SELECT * FROM Staff as s, Store as st, RegisShift as r 
            WHERE s.IDStore = st.IDStore AND s.IDStore = ${req.query.storeId}
-            AND s.IDStaff = r.IDStaff
+            AND s.IDStaff = r.IDStaff AND Status = N'Hoạt Động'
              AND r.DateRegis = '${date2.getFullYear()}-${date2.getMonth() + 1}-${date2.getDate()}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
             })
             let staffsInDate3 = await sequelize.query(`SELECT * FROM Staff as s, Store as st, RegisShift as r 
            WHERE s.IDStore = st.IDStore AND s.IDStore = ${req.query.storeId}
-            AND s.IDStaff = r.IDStaff
+            AND s.IDStaff = r.IDStaff AND Status = N'Hoạt Động'
              AND r.DateRegis = '${date3.getFullYear()}-${date3.getMonth() + 1}-${date3.getDate()}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
@@ -107,7 +108,7 @@ class BookingController {
 
             let staffsInDate4 = await sequelize.query(`SELECT * FROM Staff as s, Store as st, RegisShift as r 
            WHERE s.IDStore = st.IDStore AND s.IDStore = ${req.query.storeId}
-            AND s.IDStaff = r.IDStaff
+            AND s.IDStaff = r.IDStaff AND Status = N'Hoạt Động'
              AND r.DateRegis = '${date4.getFullYear()}-${date4.getMonth() + 1}-${date4.getDate()}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
@@ -115,7 +116,7 @@ class BookingController {
 
             let staffsInDate5 = await sequelize.query(`SELECT * FROM Staff as s, Store as st, RegisShift as r 
            WHERE s.IDStore = st.IDStore AND s.IDStore = ${req.query.storeId}
-            AND s.IDStaff = r.IDStaff
+            AND s.IDStaff = r.IDStaff AND Status = N'Hoạt Động'
              AND r.DateRegis = '${date5.getFullYear()}-${date5.getMonth() + 1}-${date5.getDate()}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
@@ -123,7 +124,7 @@ class BookingController {
 
             let staffsInDate6 = await sequelize.query(`SELECT * FROM Staff as s, Store as st, RegisShift as r 
            WHERE s.IDStore = st.IDStore AND s.IDStore = ${req.query.storeId}
-            AND s.IDStaff = r.IDStaff
+            AND s.IDStaff = r.IDStaff AND Status = N'Hoạt Động'
              AND r.DateRegis = '${date6.getFullYear()}-${date6.getMonth() + 1}-${date6.getDate()}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
@@ -241,52 +242,12 @@ class BookingController {
             })
         }
         else if (req.query.step == 2) {
-            let typeService1 = await sequelize.query(`SELECT * FROM TypeService WHERE IDTypeS=1`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
-            let typeService2 = await sequelize.query(`SELECT * FROM TypeService WHERE IDTypeS=2`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
-            let typeService3 = await sequelize.query(`SELECT * FROM TypeService WHERE IDTypeS=3`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
-            let typeService4 = await sequelize.query(`SELECT * FROM TypeService WHERE IDTypeS=4`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
-            let item1 = await sequelize.query(`SELECT * FROM Service WHERE TypeService=1`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
-            let item2 = await sequelize.query(`SELECT * FROM Service WHERE TypeService=2`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
-            let item3 = await sequelize.query(`SELECT * FROM Service WHERE TypeService=3`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
-            let item4 = await sequelize.query(`SELECT * FROM Service WHERE TypeService=4`, {
-                raw: true,
-                type: QueryTypes.SELECT
-            })
 
-            if (typeService1 != undefined & typeService2 != undefined & typeService4 != undefined & typeService4 != undefined) {
-                res.render('booking/booking-service', {
-                    typeService1: typeService1,
-                    typeService2: typeService2,
-                    typeService3: typeService3,
-                    typeService4: typeService4,
-                    item1: item1,
-                    item2: item2,
-                    item3: item3,
-                    item4: item4,
-                    serviceIds: service.serviceIds,
-                });
-            }
+            let categories = await sequelize.query(`SELECT * FROM TypeService`);
+            res.render('booking/booking-service', {
+                categories: categories[0],
+                serviceIds: service.serviceIds,
+            });
         }
     }
 
@@ -294,7 +255,7 @@ class BookingController {
         let service = req.app.locals._service;
         req.app.locals._service.serviceIds = [];
         var servicesBooked = req.body.servicesBook;
-        let checkAlreadyExist = await sequelize.query(`SELECT * FROM Book WHERE PhoneCustomer = '${req.body.phoneBook}' AND Status = N'Đã đặt lịch'`, {
+        let checkAlreadyExist = await sequelize.query(`SELECT * FROM Book WHERE PhoneCustomer = '${req.body.phoneBook}' AND StatusBook = N'Đã đặt lịch'`, {
             raw: true,
             type: QueryTypes.SELECT
         })
@@ -317,7 +278,7 @@ class BookingController {
                         ,[PhoneCustomer]
                         ,[IDStore]
                         ,[IDStaff]
-                        ,[Status])
+                        ,[StatusBook])
               VALUES
                      (${req.body.idShiftBook},'${req.body.dateBook}',${req.body.payment},'${req.body.phoneBook}',${req.body.storeBook},'${req.body.staffBook}',N'Đã đặt lịch')
                      `
@@ -360,7 +321,7 @@ class BookingController {
                         ,[PhoneCustomer]
                         ,[IDStore]
                         ,[IDStaff]
-                        ,[Status])
+                        ,[StatusBook])
               VALUES
                      (${req.body.idShiftBook},'${req.body.dateBook}',${req.body.payment},'${req.body.phoneBook}',${req.body.storeBook},'${req.body.staffBook}',N'Đã đặt lịch')
                      `
@@ -442,7 +403,7 @@ class BookingController {
             raw: true,
             type: QueryTypes.DELETE,
         });
-        let deleteBook = await sequelize.query(`DELETE Book WHERE PhoneCustomer='${req.query.phoneBook}' AND Status=N'Đã đặt lịch'`, {
+        let deleteBook = await sequelize.query(`DELETE Book WHERE PhoneCustomer='${req.query.phoneBook}' AND StatusBook=N'Đã đặt lịch'`, {
             raw: true,
             type: QueryTypes.DELETE,
         });
@@ -451,7 +412,7 @@ class BookingController {
 
     async infoBooking(req, res) {
         let infoBook = await sequelize.query(`SELECT Street,DateBook,NameStaff,SurName,HourStart,MinuteStart,NameDayOfWeek,IDShiftBook,b.IDStaff FROM DayOfWeek as d,Store as s,Book as b,Staff as st,Shift as sh,RegisShift as r
-        WHERE PhoneCustomer ='${req.body.phoneCustomer}' AND Status=N'Đã đặt lịch' AND b.IDShiftBook = sh.IDShift AND b.IDStaff = st.IDStaff
+        WHERE PhoneCustomer ='${req.body.phoneCustomer}' AND b.StatusBook=N'Đã đặt lịch' AND b.IDShiftBook = sh.IDShift AND b.IDStaff = st.IDStaff
         AND b.IDStore = s.IDStore AND d.IDDayOfWeek = r.IDDayOfWeek AND b.DateBook = r.DateRegis AND r.IDStaff = b.IDStaff`, {
             raw: true,
             type: QueryTypes.SELECT,
@@ -479,6 +440,8 @@ class BookingController {
         }
 
     }
+
+
 
 }
 

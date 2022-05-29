@@ -1,0 +1,113 @@
+.background-discover {
+  background-color: #fff; }
+
+.discover-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  padding: 0 15px;
+  color: #000; }
+
+.discover-container .discover__header {
+  padding-top: 30px; }
+
+.discover-container .discover__header .title {
+  margin: auto;
+  max-width: 420px;
+  font-family: Oswald;
+  font-weight: 400;
+  font-size: 32px;
+  text-align: center;
+  text-transform: uppercase; }
+
+.discover-container .discover__header .title span {
+  display: block;
+  font-weight: 600; }
+
+.discover-container .discover__content {
+  margin-top: 30px; }
+
+.discover-container .discover__content .cs-column {
+  display: block;
+  flex: 0 0 20%;
+  max-width: 20%; }
+
+.discover-container .discover__content .content__item {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+  cursor: pointer; }
+
+.discover-container .discover__content .content__item .item__img {
+  display: block; }
+
+.discover-container .discover__content .content__item .fade-in {
+  animation: fadeIn 1s ease;
+  -webkit-animation: fadeIn 1s ease;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s; }
+
+.discover-container .discover__content .content__item .item__img:before {
+  content: "";
+  position: absolute;
+  background: linear-gradient(180deg, transparent 66.89%, rgba(0, 0, 0, 0.8));
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px; }
+
+.discover-container .discover__content .content__item .image-hair {
+  width: 100%;
+  height: auto;
+  border-radius: 4px; }
+
+.discover-container .discover__content .content__item .item__img img {
+  object-fit: cover; }
+
+.discover-container .discover__content .content__item .tag-hair {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+.discover-container .discover__content .content__item .tag-hair__text {
+  font-family: be vietnam pro, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 0;
+  line-height: 36px;
+  height: 36px;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  flex: 1 1;
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  color: #fff; }
+
+.discover-container .discover__content .content__item .tag-hair__icons {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  z-index: 9; }
+
+.discover-container .discover__content .content__item .tag-hair__icons .icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 36px;
+  margin-top: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.discover-container .discover__content .content__item .tag-hair__icons .icon img {
+  width: 20px;
+  height: 20px; }

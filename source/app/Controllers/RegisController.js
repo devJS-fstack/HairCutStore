@@ -35,11 +35,9 @@ class RegisController {
     }
 
     async checkDuplicateEmail(req, res) {
-        let checkDuplicate = await sequelize.query(`SELECT * FROM Customer WHERE EmailCustomer = '${req.body.data.email}'`, {
-            raw: true,
-            type: QueryTypes.SELECT
-        })
-        if (checkDuplicate.length > 0) {
+        var sql = `SELECT * FROM Customer WHERE EmailCustomer = '${req.body.data.email}'`
+        let checkDuplicate = await sequelize.query(sql);
+        if (checkDuplicate[0].length > 0) {
             res.status(200).json({
                 status: 'found',
             })
@@ -70,7 +68,6 @@ class RegisController {
             },
         })
         var verifyNumber = Math.floor(Math.random() * 999999) + 100000;
-        console.log(verifyNumber);
         userLocal.verifyNumber = verifyNumber;
         let info = await transporter.sendMail({
             from: 'vantinhnguyen728@gmail.com', // sender address
@@ -80,7 +77,6 @@ class RegisController {
             html: `<p>Chào anh, đây là mã xác nhận để đăng ký tài khoản. Anh vui lòng không để lộ, mã sẽ tự động xóa sau 2 phút</p>
             <h1 style="display:flex">${verifyNumber}</h1>`, // html body
         }).catch(err => { console.log(err) })
-        console.log("Message sent: %s", info.messageId);
 
 
         // res.json(userLocal);
@@ -94,6 +90,8 @@ class RegisController {
         let verifyNumberReq = parseInt(req.body.data.verifyNumber);
         let phoneCus = userLocal.phone;
         let nameCus = userLocal.name;
+        var date = new Date();
+        let dateInsert = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
         if (verifyNumberReq === userLocal.verifyNumber) {
             let inserAccount = await sequelize.query(`INSERT INTO TaiKhoan(Account,Password,Status,IDRole) 
             VALUES('${userLocal.phone}','${userLocal.password}','Active',1)`, {
@@ -101,8 +99,8 @@ class RegisController {
                 type: QueryTypes.INSERT,
             })
             let insertCus = await sequelize.query(`
-                INSERT INTO Customer(PhoneCustomer,NameCustomer,EmailCustomer)
-                 VALUES('${userLocal.phone}',N'${userLocal.name}','${userLocal.email}')
+                INSERT INTO Customer(PhoneCustomer,NameCustomer,EmailCustomer,DateCreate)
+                 VALUES('${userLocal.phone}',N'${userLocal.name}','${userLocal.email}','${dateInsert}')
                 `, {
                 raw: true,
                 type: QueryTypes.INSERT,

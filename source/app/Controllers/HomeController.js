@@ -134,6 +134,14 @@ class HomeController {
 
     }
 
+    async getServices(req, res) {
+        let services = await sequelize.query(`select * from Service`);
+        return res.status(200).json({
+            status: 'success',
+            services: services[0],
+        })
+    }
+
 
 }
 
