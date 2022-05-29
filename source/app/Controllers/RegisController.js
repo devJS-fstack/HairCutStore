@@ -4,6 +4,9 @@ const { sequelize } = require('../../util/sequelizedb');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 const JWT = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+
 
 class RegisController {
     main(req, res, next) {
@@ -57,6 +60,7 @@ class RegisController {
         userLocal.email = req.body.inputEmail;
         userLocal.password = req.body.inputPasswordNew;
 
+
         let transporter = nodemailer.createTransport({
             type: 'SMTP',
             host: "smtp.gmail.com",
@@ -92,9 +96,11 @@ class RegisController {
         let nameCus = userLocal.name;
         var date = new Date();
         let dateInsert = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(userLocal.password, salt);
         if (verifyNumberReq === userLocal.verifyNumber) {
             let inserAccount = await sequelize.query(`INSERT INTO TaiKhoan(Account,Password,Status,IDRole) 
-            VALUES('${userLocal.phone}','${userLocal.password}','Active',1)`, {
+            VALUES('${userLocal.phone}','${hashedPassword}','Active',1)`, {
                 raw: true,
                 type: QueryTypes.INSERT,
             })

@@ -2,6 +2,7 @@ const TaiKhoan = require('../Models/TaiKhoan');
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../../util/sequelizedb');
 const JWT = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 
 require('dotenv').config();
@@ -17,39 +18,66 @@ class HomeController {
     async postLogin(req, res) {
         const account = req.body.data.account;
         const password = req.body.data.password;
-        let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = PhoneCustomer AND Account='${account}' COLLATE SQL_Latin1_General_CP1_CS_AS
-            AND Password='${password}' COLLATE SQL_Latin1_General_CP1_CS_AS`, {
-            raw: true,
-            type: QueryTypes.SELECT,
-        });
-        if (user.length > 0) {
-            const encodedToken = () => {
-                return JWT.sign({
-                    role: user[0].IDRole,
-                    accountId: user[0].Account,
-                    nameCustomer: user[0].NameCustomer,
-                    iat: new Date().getTime(),
-                    exp: new Date().setDate(new Date().getDate() + 3)
-                }, process.env.SECRET_KEY_ACCESS_TOKEN);
+        const salt = await bcrypt.genSalt(10);
+        let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = PhoneCustomer and Account = '${account}'`)
+        if (user[0].length > 0) {
+            const result = await bcrypt.compare(password, user[0][0].Password);
+            if (result == true) {
+                const encodedToken = () => {
+                    return JWT.sign({
+                        role: user[0][0].IDRole,
+                        accountId: user[0][0].Account,
+                        nameCustomer: user[0][0].NameCustomer,
+                        iat: new Date().getTime(),
+                        exp: new Date().setDate(new Date().getDate() + 3)
+                    }, process.env.SECRET_KEY_ACCESS_TOKEN);
+                }
+                const token = encodedToken();
+                res.status(200).json({
+                    status: "success",
+                    elements: {
+                        token: token,
+                        nameUser: user[0][0].NameCustomer,
+                        phoneCustomer: user[0][0].PhoneCustomer
+                    }
+                })
+            } else {
+                res.status(200).json({
+                    status: "fail",
+                    elements: {
+                        err: "User is not found",
+                    }
+                })
             }
-            const token = encodedToken();
-            res.status(200).json({
-                status: "success",
-                elements: {
-                    token: token,
-                    nameUser: user[0].NameCustomer,
-                    phoneCustomer: user[0].PhoneCustomer
-                }
-            })
         }
-        else {
-            res.status(200).json({
-                status: "fail",
-                elements: {
-                    err: "User is not found",
-                }
-            })
-        }
+        // if (user.length > 0) {
+        //     const encodedToken = () => {
+        //         return JWT.sign({
+        //             role: user[0].IDRole,
+        //             accountId: user[0].Account,
+        //             nameCustomer: user[0].NameCustomer,
+        //             iat: new Date().getTime(),
+        //             exp: new Date().setDate(new Date().getDate() + 3)
+        //         }, process.env.SECRET_KEY_ACCESS_TOKEN);
+        //     }
+        //     const token = encodedToken();
+        //     res.status(200).json({
+        //         status: "success",
+        //         elements: {
+        //             token: token,
+        //             nameUser: user[0].NameCustomer,
+        //             phoneCustomer: user[0].PhoneCustomer
+        //         }
+        //     })
+        // }
+        // else {
+        //     res.status(200).json({
+        //         status: "fail",
+        //         elements: {
+        //             err: "User is not found",
+        //         }
+        //     })
+        // }
     }
 
     checkToken(req, res) {
