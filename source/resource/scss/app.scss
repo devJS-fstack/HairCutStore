@@ -6,6 +6,10 @@ html {
     scroll-behavior: smooth;
 }
 
+body {
+    font-family: be vietnam pro, sans-serif;
+}
+
 img,
 video {
     max-width: 100%;
@@ -62,7 +66,7 @@ a:hover {
     color: red;
     position: absolute;
     display: none;
-    top: 34px;
+    top: 43px;
 }
 
 .heading-login {
@@ -1629,4 +1633,37 @@ a:hover {
 .ant-input:hover {
     border-color: #40a9ff;
     border-right-width: 1px !important;
+}
+
+.changepass {
+    min-height: 17.1875rem;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px #8888;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.header-change-pass {
+    box-sizing: border-box;
+    min-height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: be vietnam pro, sans-serif;
+}
+
+.body-change-pass {
+    padding: 0 1rem 0rem;
+}
+
+.input-change {
+    margin: 1.25rem auto 0.3125rem;
+}
+
+.input-change-pass {
+    outline: none;
+    border: 0;
+    flex: 1;
+    flex-shrink: 0;
+    filter: none;
 }

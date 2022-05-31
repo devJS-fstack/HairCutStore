@@ -79,6 +79,8 @@ btnLogin.onclick = async (e) => {
                             nhập</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" data-toggle="modal" data-target="#regisModal">Đăng ký</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#changepass">Quên mật khẩu</a>
                 `
         }
     }
@@ -191,6 +193,37 @@ btnRegis.addEventListener('click', async (e) => {
     }
 })
 
+const btnSearchAcc = document.getElementById('btn-search-account');
+const spanEmail_search = document.querySelector('.err-email__search');
+const inputEmail_search = document.querySelector('[name=inputEmail_search]');
+var email_changePass;
+inputEmail_search.oninput = () => {
+    notiRegis('none', '', null, spanEmail_search)
+}
+
+btnSearchAcc.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (inputEmail_search.value == "") notiRegis('block', 'Anh vui lòng nhập email', inputEmail_search, spanEmail_search)
+    else {
+        if (validateEmail(inputEmail_search.value)) {
+            const { status } = await checkDuplicateEmail(inputEmail_search.value)
+            if (status == 'found') {
+                notiRegis('none', '', null, spanEmail_search)
+                email_changePass = inputEmail_search.value;
+                inputEmail_search.value = ''
+                $('.header-verify').text(`${email_changePass}`)
+                $('#changepass').modal('hide');
+                $('#verify-email').modal('show');
+                await sendverify(email_changePass);
+            } else {
+                notiRegis('block', 'Email này chưa được dùng để đăng ký tài khoản', inputEmail_search, spanEmail_search)
+            }
+        } else {
+            notiRegis('block', 'Anh vui lòng nhập đúng định dạng email', inputEmail_search, spanEmail_search)
+        }
+    }
+})
+
 
 
 phoneRegis.onfocus = async () => {
@@ -242,11 +275,20 @@ if (accessToken != `null`) {
                             nhập</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" data-toggle="modal" data-target="#regisModal">Đăng ký</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#changepass">Quên mật khẩu</a>
                 `
             window.location.href = '/';
         }
     }
 }
+
+async function sendverify(email) {
+    return (await instance.post('/regis/sendverify', {
+        email
+    })).data;
+}
+
 async function checkToken() {
     return (await instance.post('/checkToken', {
         data: {

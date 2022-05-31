@@ -7,7 +7,7 @@ class BookingController {
         let user = req.app.locals._user;
         let service = req.app.locals._service;
         if (req.query.step == 0) {
-            req.app.locals._service = [];
+            // req.app.locals._service = [];
             let cus = await sequelize.query(`SELECT * FROM Customer WHERE PhoneCustomer = '${req.body.inputPhone}'`, {
                 raw: true,
                 type: QueryTypes.SELECT,
@@ -47,9 +47,9 @@ class BookingController {
                 isHaveName = false;
                 lengthService = 'Xem tất cả dịch vụ hấp dẫn'
             }
-            if (service.serviceIds.length > 0) {
-                lengthService = `Đã chọn ${service.serviceIds.length} dịch vụ`;
-            }
+            // if (service.serviceIds.length > 0) {
+            //     lengthService = `Đã chọn ${service.serviceIds.length} dịch vụ`;
+            // }
 
             // Handle shift
             let shift = await sequelize.query(`SELECT * FROM Shift`, {

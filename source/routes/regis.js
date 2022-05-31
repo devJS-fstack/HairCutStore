@@ -8,6 +8,7 @@ router.post('/stored', regisController.createUser)
 router.post('/checkDuplicatePhone', regisController.checkDuplicatePhone)
 router.post('/checkDuplicateEmail', regisController.checkDuplicateEmail)
 router.post('/verify-email', regisController.verifyEmail)
+router.post('/sendverify', regisController.sendVerify)
 router.post('/confirm-verify', regisController.confirmNumber)
 router.get('/', regisController.main)
 

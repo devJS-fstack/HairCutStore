@@ -9,16 +9,14 @@ require('dotenv').config();
 class HomeController {
     // Handle main home
     async getMain(req, res, next) {
-        var scripts = [{ script: '/js-handle/home.js' }]
+        req.app.locals._service = [];
         res.render('home', {
-            scripts: scripts
         });
     }
 
     async postLogin(req, res) {
         const account = req.body.data.account;
         const password = req.body.data.password;
-        const salt = await bcrypt.genSalt(10);
         let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = PhoneCustomer and Account = '${account}'`)
         if (user[0].length > 0) {
             const result = await bcrypt.compare(password, user[0][0].Password);
@@ -50,34 +48,6 @@ class HomeController {
                 })
             }
         }
-        // if (user.length > 0) {
-        //     const encodedToken = () => {
-        //         return JWT.sign({
-        //             role: user[0].IDRole,
-        //             accountId: user[0].Account,
-        //             nameCustomer: user[0].NameCustomer,
-        //             iat: new Date().getTime(),
-        //             exp: new Date().setDate(new Date().getDate() + 3)
-        //         }, process.env.SECRET_KEY_ACCESS_TOKEN);
-        //     }
-        //     const token = encodedToken();
-        //     res.status(200).json({
-        //         status: "success",
-        //         elements: {
-        //             token: token,
-        //             nameUser: user[0].NameCustomer,
-        //             phoneCustomer: user[0].PhoneCustomer
-        //         }
-        //     })
-        // }
-        // else {
-        //     res.status(200).json({
-        //         status: "fail",
-        //         elements: {
-        //             err: "User is not found",
-        //         }
-        //     })
-        // }
     }
 
     checkToken(req, res) {
