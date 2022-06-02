@@ -43,10 +43,17 @@ class HomeController {
                 res.status(200).json({
                     status: "fail",
                     elements: {
-                        err: "User is not found",
+                        err: "User is not correct password",
                     }
                 })
             }
+        } else {
+            res.status(200).json({
+                status: "fail",
+                elements: {
+                    err: "User is not found",
+                }
+            })
         }
     }
 

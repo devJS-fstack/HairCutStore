@@ -229,16 +229,17 @@
     border: 1px solid rgba(0,0,0,.14);
     border-radius: 2px;">
                         <input type="text" class="form-control input-change-pass" aria-label="Small"
-                            aria-describedby="inputGroup-sizing-sm" placeholder="Mã xác thực" name="">
+                            aria-describedby="inputGroup-sizing-sm" placeholder="Mã xác thực" name="verify_number">
 
                     </div>
-                    {{!-- <span class="span-err__regis err-name">Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra
-                        lại!</span> --}}
                 </div>
+                <span class="span-err__regis err-verify" style="top:133px">Tài khoản hoặc mật khẩu không đúng. Mời anh
+                    kiểm tra
+                    lại!</span>
             </div>
             <div class="modal-footer">
-                <button id="btn-change-pass" type="submit" class="btn btn-primary btn-change-pass"
-                    style="width:100%">Xác Nhận</button>
+                <button id="btn-verify" type="submit" class="btn btn-primary btn-change-pass" style="width:100%">Xác
+                    Nhận</button>
             </div>
         </div>
     </div>
@@ -266,8 +267,8 @@
     overflow: hidden;
     border: 1px solid rgba(0,0,0,.14);
     border-radius: 2px;">
-                        <input type="text" class="form-control input-chang-pass" aria-label="Small"
-                            aria-describedby="inputGroup-sizing-sm" placeholder="Mật khẩu mới" name="">
+                        <input type="password" class="form-control input-change-pass" aria-label="Small"
+                            aria-describedby="inputGroup-sizing-sm" placeholder="Mật khẩu mới" name="pass_first">
 
                     </div>
                     {{!-- <span class="span-err__regis err-name">Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra
@@ -282,16 +283,16 @@
     overflow: hidden;
     border: 1px solid rgba(0,0,0,.14);
     border-radius: 2px;">
-                        <input type="text" class="form-control input-chang-pass" aria-label="Small"
-                            aria-describedby="inputGroup-sizing-sm" placeholder="Nhập lại mật khẩu mới" name="">
+                        <input type="password" class="form-control input-change-pass" aria-label="Small"
+                            aria-describedby="inputGroup-sizing-sm" placeholder="Nhập lại mật khẩu mới"
+                            name="pass_last">
 
                     </div>
-                    {{!-- <span class="span-err__regis err-name">Tài khoản hoặc mật khẩu không đúng. Mời anh kiểm tra
-                        lại!</span> --}}
                 </div>
             </div>
+            <span class="span-err__regis err-pass-change" style="top: 58px;width: 100%;text-align: center;"></span>
             <div class="modal-footer">
-                <button id="btn-change-pass" type="submit" class="btn btn-success btn-change-pass"
+                <button id="btn-confirm__change-pass" type="submit" class="btn btn-success btn-change-pass"
                     style="width:100%">Xác Nhận</button>
             </div>
         </div>

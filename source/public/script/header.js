@@ -55,7 +55,6 @@ btnLogin.onclick = async (e) => {
     e.preventDefault();
     const { status, elements } = await login();
 
-
     if (status == 'fail') {
         errLogin.style.display = 'block';
     }
@@ -225,6 +224,73 @@ btnSearchAcc.addEventListener('click', async (e) => {
 })
 
 
+const btnVerify = document.querySelector('#btn-verify');
+const inputVerify = document.querySelector('[name=verify_number]')
+const spanVerify = document.querySelector('.err-verify');
+
+
+inputVerify.oninput = () => {
+    inputVerify.value = inputVerify.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    notiRegis('none', '', null, spanVerify)
+}
+
+var count = 0;
+btnVerify.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (inputVerify.value == "") {
+        notiRegis('block', 'Anh vui lòng nhập mã xác thực', inputVerify, spanVerify)
+    } else {
+        count++;
+        if (count < 5) {
+            const { status } = await confirmVerify_changepass(inputVerify.value.trim());
+            if (status == 'success') {
+                $('#verify-email').modal('hide');
+                inputVerify.value = "";
+                $('#change-pass-new').modal('show');
+            } else {
+                notiRegis('block', `Mã xác thực không chính xác. Anh còn ${5 - count} lần nhập`, inputVerify, spanVerify)
+            }
+        } else {
+            $('#verify-email').modal('hide');
+            notiRegis('none', '', null, spanVerify)
+            inputVerify.value = "";
+        }
+    }
+})
+
+
+const btnConfirm_change = document.getElementById('btn-confirm__change-pass');
+const inputPass_first = document.querySelector('[name=pass_first]');
+const inputPass_last = document.querySelector('[name=pass_last]');
+const span_changepass = document.querySelector('.err-pass-change');
+
+inputPass_first.oninput = () => {
+    notiRegis('none', '', null, span_changepass);
+}
+
+inputPass_last.oninput = () => {
+    notiRegis('none', '', null, span_changepass);
+}
+
+btnConfirm_change.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (inputPass_first.value == "" || inputPass_last.value == "") {
+        notiRegis('block', 'Anh vui lòng nhập đầy đủ thông tin mật khẩu', null, span_changepass);
+    } else {
+        if (inputPass_first.value === inputPass_last.value) {
+            const { status, elements } = await setPasswordNew(inputPass_first.value, email_changePass);
+            if (status === 'success') {
+                window.localStorage.setItem('accessToken', elements.token);
+                window.localStorage.setItem('phoneCustomer', elements.phoneCustomer);
+                window.location.href = '/';
+            }
+        } else {
+            notiRegis('block', 'Nhập sai mật khẩu xác nhận. Anh vui lòng nhập chính xác !', null, span_changepass);
+            console.log('not match')
+        }
+    }
+})
+
 
 phoneRegis.onfocus = async () => {
     checkNameRegis();
@@ -281,6 +347,19 @@ if (accessToken != `null`) {
             window.location.href = '/';
         }
     }
+}
+
+async function setPasswordNew(passwordNew, email) {
+    return (await instance.post('/regis/confirm-change-password', {
+        passwordNew,
+        email
+    })).data;
+}
+
+async function confirmVerify_changepass(verifyNumber) {
+    return (await instance.post('/regis/confirm-verify-change-pass', {
+        verifyNumber
+    })).data;
 }
 
 async function sendverify(email) {

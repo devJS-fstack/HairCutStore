@@ -166,52 +166,59 @@ class RegisController {
             <h1 style="display:flex">${verifyNumber}</h1>`, // html body
         }).catch(err => { console.log(err) })
 
-        await setTimeout(() => {
+        setTimeout(() => {
             userLocal.verifyNumber = Math.floor(Math.random() * 999999) + 100000;
             console.log(userLocal.verifyNumber, "???")
         }, 1000 * 120)
     }
 
-    async setNewPassword(req, res) {
+    async confirmVerify_changepass(req, res) {
         let userLocal = req.app.locals._userRegis;
         let verifyNumberReq = parseInt(req.body.verifyNumber);
+        if (verifyNumberReq === userLocal.verifyNumber) {
+            return res.status(200).json({
+                status: "success",
+            })
+        }
+        else {
+            return res.status(200).json({
+                status: "not match",
+            })
+        }
+    }
+
+    async setNewPassword(req, res) {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.passwordNew, salt);
-        if (verifyNumberReq === userLocal.verifyNumber) {
-            var sql = `UPDATE TaiKhoan  SET Password = '${hashedPassword}' 
+        var sql = `UPDATE TaiKhoan  SET Password = '${hashedPassword}' 
             FROM TaiKhoan as t,Customer as c 
             WHERE t.Account = c.PhoneCustomer and c.EmailCustomer = '${req.body.email}'`
-            await sequelize.query(sql);
-            let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = PhoneCustomer and Account = '${account}'`)
-            if (user[0].length > 0) {
-                const encodedToken = () => {
-                    return JWT.sign({
-                        role: user[0][0].IDRole,
-                        accountId: user[0][0].Account,
-                        nameCustomer: user[0][0].NameCustomer,
-                        iat: new Date().getTime(),
-                        exp: new Date().setDate(new Date().getDate() + 3)
-                    }, process.env.SECRET_KEY_ACCESS_TOKEN);
-                }
-                const token = encodedToken();
-                res.status(200).json({
-                    status: "success",
-                    elements: {
-                        token: token,
-                        nameUser: user[0][0].NameCustomer,
-                        phoneCustomer: user[0][0].PhoneCustomer
-                    }
-                })
+        await sequelize.query(sql);
+        let user = await sequelize.query(`SELECT * FROM TaiKhoan,Customer WHERE Account = PhoneCustomer and EmailCustomer = '${req.body.email}'`)
+        if (user[0].length > 0) {
+            const encodedToken = () => {
+                return JWT.sign({
+                    role: user[0][0].IDRole,
+                    accountId: user[0][0].Account,
+                    nameCustomer: user[0][0].NameCustomer,
+                    iat: new Date().getTime(),
+                    exp: new Date().setDate(new Date().getDate() + 3)
+                }, process.env.SECRET_KEY_ACCESS_TOKEN);
             }
-        } else {
+            const token = encodedToken();
             res.status(200).json({
-                status: "conflict",
+                status: "success",
                 elements: {
-                    token: '',
-                    nameUser: '',
-                    phoneCustomer: ''
+                    token: token,
+                    nameUser: user[0][0].NameCustomer,
+                    phoneCustomer: user[0][0].PhoneCustomer
                 }
             })
+        } else {
+            res.status(200).json({
+                status: "failed",
+            })
+
         }
     }
 
