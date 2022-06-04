@@ -75,6 +75,7 @@ class RegisController {
             email: req.body.inputEmail,
         })
         var verifyNumber = Math.floor(Math.random() * 999999) + 100000;
+        console.log(verifyNumber);
         userLocal.verifyNumber = verifyNumber;
         let info = await transporter.sendMail({
             from: 'vantinhnguyen728@gmail.com', // sender address

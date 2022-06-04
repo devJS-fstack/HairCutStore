@@ -21,7 +21,7 @@ function renderServices(services) {
                     </div>
                 </div>
                 <div class="item__button">
-                    <img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                    <img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                     Chọn
                 </div>
             </div>`
@@ -53,13 +53,13 @@ window.addEventListener('load', async () => {
     chooseBtn.forEach((item, index) => {
         item.onclick = () => {
             if (!item.classList.contains('checkedService')) {
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Đã chọn
                 `;
                 item.classList.add('checkedService');
             }
             else {
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                 item.classList.remove('checkedService');
             }
@@ -87,17 +87,17 @@ window.addEventListener('load', async () => {
         item.onclick = () => {
             if (!item.classList.contains('checkedService')) {
                 btnCategory1.forEach((item, index) => {
-                    item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                    item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                     item.classList.remove('checkedService');
                 })
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Đã chọn
                 `;
                 item.classList.add('checkedService');
             }
             else {
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                 item.classList.remove('checkedService');
             }
@@ -110,17 +110,17 @@ window.addEventListener('load', async () => {
                 btnCategory2.forEach((item, index1) => {
                     if (index < 4) {
                         if (index1 < 4) {
-                            item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                            item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                             item.classList.remove('checkedService');
                         }
                     }
                 })
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Đã chọn`
                 item.classList.add('checkedService');
             } else {
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                 item.classList.remove('checkedService');
             }
@@ -133,17 +133,17 @@ window.addEventListener('load', async () => {
                 btnCategory3.forEach((item, index1) => {
                     if (index < 5) {
                         if (index1 < 5) {
-                            item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                            item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                             item.classList.remove('checkedService');
                         }
                     }
                 })
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Đã chọn`
                 item.classList.add('checkedService');
             } else {
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                 item.classList.remove('checkedService');
             }
@@ -155,15 +155,15 @@ window.addEventListener('load', async () => {
             if (!item.classList.contains('checkedService')) {
                 btnCategory4.forEach((item, index) => {
                     item.classList.remove('checkedService');
-                    item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                    item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                 })
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Đã chọn`
                 item.classList.add('checkedService');
             }
             else {
-                item.innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                item.innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Chọn`
                 item.classList.remove('checkedService');
             }
@@ -209,7 +209,7 @@ window.addEventListener('load', async () => {
             dataService.forEach((data, indexData) => {
                 if (data.value == item.value) {
                     chooseBtn[index].classList.add('checkedService');
-                    chooseBtn[index].innerHTML = `<img src="https://30shine.com/static/media/checked.ae42306a.svg" alt="">
+                    chooseBtn[index].innerHTML = `<img src="https://30shine.com/static/media/checked.380e2632.svg" alt="">
                 Đã chọn`
                 }
             })

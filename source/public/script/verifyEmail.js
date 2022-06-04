@@ -1,8 +1,8 @@
-const btnVerify = document.querySelector('.btn-verify-number');
-const verifyInput = document.getElementById('verify-number');
-btnVerify.onclick = async (e) => {
+const btnVerify_regis = document.querySelector('.btn-verify-number__regis');
+const verifyInput_regis = document.getElementById('verify-number__regis');
+btnVerify_regis.onclick = async (e) => {
     e.preventDefault();
-    const { status, token, phoneCustomer } = await verify();
+    const { status, token, phoneCustomer } = await verify(verifyInput_regis.value);
     if (status == 'success') {
         window.localStorage.setItem('accessToken', token);
         window.localStorage.setItem('phoneCustomer', phoneCustomer);
@@ -14,10 +14,10 @@ btnVerify.onclick = async (e) => {
 }
 
 
-async function verify() {
+async function verify(verifyNumber) {
     return (await instance.post('/regis/confirm-verify', {
         data: {
-            verifyNumber: verifyInput.value,
+            verifyNumber,
         }
     })).data;
 }

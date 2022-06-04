@@ -126,7 +126,7 @@ styDrop.onclick = () => {
     } else {
         contentStaff.classList.remove('hide-stylist');
         contentStaff.classList.add('fade-in');
-        imgDrop.src = 'https://30shine.com/static/media/chevronDown.4843aae8.svg';
+        imgDrop.src = 'https://30shine.com/static/media/chevronDown.1d0d7f45.svg';
         var staffItem = document.querySelectorAll('.left');
         var staffImg = document.querySelector('.user-default');
         //removeAllActiveStaff(staffItem);
@@ -548,7 +548,7 @@ function clickStaffItem(staffItem, staffInDate, bookedInDate) {
                 unvaliableTimeBooked(bookedInDate, staffInDate[index].IDStaff);
                 staffChoose = staffInDate[index].IDStaff;
                 html = staffImg[index].innerHTML;
-                html += `  <img class="icon-check-default" src="https://30shine.com/static/media/checkYellow.02dbd103.svg"/>`;
+                html += `  <img class="icon-check-default" src="https://30shine.com/static/media/checkYellow.42e3e99c.svg"/>`;
                 staffImg[index].innerHTML = html;
                 item.classList.add('isActive');
             }
@@ -561,7 +561,7 @@ function clickStaffItem(staffItem, staffInDate, bookedInDate) {
 function isActiveFirstStaff(staffLeft, staffImg) {
     var html = ``;
     html = staffImg.innerHTML;
-    html += `  <img class="icon-check-default" src="https://30shine.com/static/media/checkYellow.02dbd103.svg"/>`;
+    html += `  <img class="icon-check-default" src="https://30shine.com/static/media/checkYellow.42e3e99c.svg"/>`;
     staffImg.innerHTML = html;
     staffLeft.classList.add('isActive');
 }
